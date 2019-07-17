@@ -1,7 +1,8 @@
 <template>
   <div class="trainings">
     <div class="py-2">
-      <v-tabs centered color="green" dark icons-and-text class="secondNav">
+      <v-tabs centered color="light-green darken-2
+" dark icons-and-text class="secondNav">
         <v-tabs-slider color="black"></v-tabs-slider>
 
         <v-tab href="#tab-1">

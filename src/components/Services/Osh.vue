@@ -4,39 +4,41 @@
       <h3 class="grey--text ml-2 my-3">Occupational Safety Health (OSH)</h3>
       <v-layout align-center justify-center row fill-height wrap>
         <v-flex xs12 sm6 md3 class="pa-3" v-for="(data, index) in servicesData" :key="index">
-          <v-card>
-            <v-img :src="data.img" contain></v-img>
+          <v-hover>
+            <v-card slot-scope="{ hover }" :class="`elevation-${hover ? 15 : 2}`">
+              <v-img :src="data.img" contain></v-img>
 
-            <v-card-title primary-title>
-              <div>
-                <h5 class="courseTitle">{{data.name}}</h5>
-                <div class="my-1" v-if="data.space">
-                  <br />
-                </div>
-              </div>
-            </v-card-title>
-
-            <v-card-actions>
-              <v-dialog v-model="data.dialog" width="1500">
-                <template v-slot:activator="{ on }">
-                  <v-btn color="error lighten-2" dark v-on="on">Learn More</v-btn>
-                </template>
-
-                <v-card>
-                  <div v-for="(outline, index) in data.courseOutline" :key="index">
-                    <v-img width :src="outline.src" contain></v-img>
+              <v-card-title primary-title>
+                <div>
+                  <h5 class="courseTitle">{{data.name}}</h5>
+                  <div class="my-1" v-if="data.space">
+                    <br />
                   </div>
+                </div>
+              </v-card-title>
 
-                  <v-divider></v-divider>
+              <v-card-actions>
+                <v-dialog v-model="data.dialog" width="1500">
+                  <template v-slot:activator="{ on }">
+                    <v-btn color="error lighten-2" dark v-on="on">Learn More</v-btn>
+                  </template>
 
-                  <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn color="primary" flat @click="data.dialog = false">Close</v-btn>
-                  </v-card-actions>
-                </v-card>
-              </v-dialog>
-            </v-card-actions>
-          </v-card>
+                  <v-card>
+                    <div v-for="(outline, index) in data.courseOutline" :key="index">
+                      <v-img width :src="outline.src" contain></v-img>
+                    </div>
+
+                    <v-divider></v-divider>
+
+                    <v-card-actions>
+                      <v-spacer></v-spacer>
+                      <v-btn color="primary" flat @click="data.dialog = false">Close</v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </v-dialog>
+              </v-card-actions>
+            </v-card>
+          </v-hover>
         </v-flex>
       </v-layout>
     </v-container>
