@@ -2,7 +2,7 @@
   <div class="nav">
     <nav>
       <v-toolbar app class="black" dark>
-        <v-toolbar-side-icon @click="drawer = !drawer" class="hidden-md-and-up black"></v-toolbar-side-icon>
+        <v-toolbar-side-icon @click="drawer = !drawer" class="hidden-md-and-up grey darken-4"></v-toolbar-side-icon>
         <v-img :src="require('@/assets/logo3.png')" class="mr-5" contain max-width="115" />
 
         <v-spacer></v-spacer>
@@ -12,7 +12,7 @@
         </div>
       </v-toolbar>
 
-      <v-navigation-drawer app v-model="drawer" class="black">
+      <v-navigation-drawer app v-model="drawer" class="grey darken-4">
         <!--use column to stack 2 elements on top of each other-->
         <v-layout column align-center>
           <v-flex class="mt-5">
@@ -50,11 +50,11 @@ export default {
         {
           text: "Services",
           route: "/services",
-          icon: "supervised_user_circle"
+          icon: "store_mall_directory"
         },
-        { text: "Clients", route: "/clients", icon: "fas fa-copyright" },
-        { text: "About", route: "/about", icon: "fas fa-copyright" },
-        { text: "Contact Us", route: "/contactUs", icon: "fas fa-copyright" }
+        { text: "Clients", route: "/clients", icon: "people" },
+        { text: "About", route: "/about", icon: "library_books" },
+        { text: "Contact Us", route: "/contactUs", icon: "phonelink_ring" }
       ]
     };
   }

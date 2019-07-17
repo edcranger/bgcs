@@ -26,30 +26,28 @@
         <v-tab-item :value="'tab-' + 2">
           <Osh />
         </v-tab-item>
-        <v-tab-item :value="'tab-' + 3"></v-tab-item>
+        <v-tab-item :value="'tab-' + 3">
+          <Events />
+        </v-tab-item>
       </v-tabs>
     </div>
 
     <!-- <Aha />
     <Ashi />-->
-    <Footer />
   </div>
 </template>
 
 <script>
-import Footer from "@/components/Footer";
 import EandS from "@/components/Services/EandS";
 import Osh from "@/components/Services/Osh";
-import Aha from "@/components/Services/Aha";
-import Ashi from "@/components/Services/Ashi";
+import Events from "@/components/Services/Events";
+
 export default {
   name: "Tranings",
   components: {
     EandS,
     Osh,
-    Aha,
-    Ashi,
-    Footer
+    Events
   },
   data() {
     return {};
