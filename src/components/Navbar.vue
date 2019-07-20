@@ -52,8 +52,8 @@ export default {
           route: "/services",
           icon: "store_mall_directory"
         },
-        { text: "Clients", route: "/clients", icon: "people" },
         { text: "About", route: "/about", icon: "library_books" },
+        { text: "Clients", route: "/clients", icon: "people" },
         { text: "Contact Us", route: "/contactUs", icon: "phonelink_ring" }
       ]
     };

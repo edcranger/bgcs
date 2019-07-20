@@ -5,7 +5,7 @@
         <v-container>
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1216.0550460689565!2d121.06792326232832!3d14.614231504464426!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397b7f20e694bc3%3A0xf90dd909b85ddc1b!2s543+Col.+Bonny+Serrano+Ave%2C+Project+4%2C+Quezon+City%2C+1109+Metro+Manila!5e0!3m2!1sen!2sph!4v1562788831356!5m2!1sen!2sph"
-            width="360"
+            width="100%"
             height="450"
             frameborder="0"
             style="border:0"

@@ -3,6 +3,8 @@ import Router from "vue-router";
 import Home from "./views/Home.vue";
 import Services from "./views/Services.vue";
 import Clients from "./views/Clients.vue";
+import About from "./views/About.vue";
+import Contact from "./views/Contact.vue";
 
 Vue.use(Router);
 
@@ -27,6 +29,16 @@ export default new Router({
       path: "/clients",
       name: "clients",
       component: Clients
+    },
+    {
+      path: "/about",
+      name: "about",
+      component: About
+    },
+    {
+      path: "/contactUs",
+      name: "contact",
+      component: Contact
     }
   ]
 });
