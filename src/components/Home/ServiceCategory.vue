@@ -2,7 +2,7 @@
   <div class="service-category">
     <v-container fluid>
       <v-layout align-center justify-center row fill-height wrap class="text-xs-center">
-        <v-flex xs12 md4 class="pa-3 mx-5">
+        <v-flex xs12 md4 class="my-1 mx-5">
           <v-hover>
             <v-card
               slot-scope="{ hover }"
@@ -33,7 +33,7 @@
             </v-card>
           </v-hover>
         </v-flex>
-        <v-flex xs12 md4 class="pa-3 mx-5">
+        <v-flex xs12 md4 class="mx-5 my-1">
           <v-hover>
             <v-card
               slot-scope="{ hover }"

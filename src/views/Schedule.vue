@@ -16,7 +16,7 @@
       </v-toolbar>
 
       <v-layout row wrap>
-        <v-flex xs12 class="pa-3">
+        <v-flex xs12 class="pa-2">
           <v-sheet height="500">
             <v-calendar ref="calendar" :value="today" color="primary" v-model="start">
               <template v-slot:day="{ date }">
@@ -59,13 +59,63 @@
             </v-calendar>
           </v-sheet>
         </v-flex>
-        <v-btn @click="$refs.calendar.prev()">
-          <v-icon dark left>keyboard_arrow_left</v-icon>Prev
+        <div>
+          <v-btn @click="$refs.calendar.prev()">
+            <v-icon dark left>keyboard_arrow_left</v-icon>Prev
+          </v-btn>
+          <v-btn @click="$refs.calendar.next()">
+            Next
+            <v-icon right dark>keyboard_arrow_right</v-icon>
+          </v-btn>
+        </div>
+      </v-layout>
+    </v-card>
+
+    <v-card class="elevation-5 cardmessage mt-4">
+      <v-toolbar color="grey darken-4" dark>
+        <v-toolbar-title>Add a schedule</v-toolbar-title>
+
+        <v-spacer></v-spacer>
+
+        <v-btn icon>
+          <v-icon>search</v-icon>
         </v-btn>
-        <v-btn @click="$refs.calendar.next()">
-          Next
-          <v-icon right dark>keyboard_arrow_right</v-icon>
+
+        <v-btn icon>
+          <v-icon>check_circle</v-icon>
         </v-btn>
+      </v-toolbar>
+
+      <v-layout row wrap>
+        <v-flex xs12 class="pa-3">
+          <v-card class="mx-auto">
+            <v-form ref="form" v-model="form" class="pa-2">
+              <v-select v-model="name" :items="category" label="Schedule Type"></v-select>
+              <v-slider v-model="max" :label="`Attendies: ` + max"></v-slider>
+              <v-date-picker v-model="picker" color="green lighten-1"></v-date-picker>
+              <v-textarea
+                v-model="description"
+                auto-grow
+                color="green"
+                label="Description"
+                rows="2"
+                class="mt-5"
+              ></v-textarea>
+            </v-form>
+            <v-divider></v-divider>
+            <v-card-actions>
+              <v-btn flat @click="$refs.form.reset()">Clear</v-btn>
+              <v-spacer></v-spacer>
+              <v-btn
+                :disabled="!form"
+                :loading="isLoading"
+                class="white--text"
+                color="deep-purple accent-4"
+                depressed
+              >Create</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-flex>
       </v-layout>
     </v-card>
   </div>
@@ -74,8 +124,58 @@
 <script>
 export default {
   name: "Schedule",
+
   data() {
     return {
+      name: null,
+      agreement: false,
+      description: null,
+      dialog: false,
+      picker: undefined,
+      form: false,
+      isLoading: false,
+      max: 0,
+      picker: new Date().toISOString().substr(0, 10),
+      password: undefined,
+      phone: undefined,
+      category: [
+        "----Emergency Trainings----",
+        "Advance Cardiovascular Life Support ACLS (ASHI)",
+        "Advance Cardiovascular Life Support ACLS (AHA)",
+        "Basic Life Support (ASHI)",
+        "Basic Life Support (AHA)",
+        "Basic Life Support with AED",
+        "Disaster Risk Reduction Management",
+        "Earthquake Awareness and Emergency Management",
+        "First Aid",
+        "High Angle and Rope Rescue",
+        "Incident Command System (ICS)",
+        "Search and Rescue",
+        "------Occupation Safety and Health------",
+        "Basic Occupational Safety and Health (BOSH) ",
+        "Behavior Based Safety",
+        "Chemical Safety",
+        "Confined Space Entry Training",
+        "Construction Occupational Safety and Health (COSH)",
+        "HAZMAT",
+        "Loss Control Management (LCM)",
+        "Risk Management",
+        "Safety Program Audit (SPA)",
+        "Train the Trainer (TTT)",
+        "Working at Heights (WAT)"
+      ],
+      rules: {
+        email: v => (v || "").match(/@/) || "Please enter a valid email",
+        length: len => v =>
+          (v || "").length >= len ||
+          `Invalid character length, required ${len}`,
+        password: v =>
+          (v || "").match(
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/
+          ) ||
+          "Password must contain an upper case letter, a numeric character, and a special character",
+        required: v => !!v || "This field is required"
+      },
       start: "07-24-2019",
       today: "07-24-2019",
       events: [

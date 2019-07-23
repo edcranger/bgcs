@@ -2,7 +2,7 @@
   <div class="admin-dashboard">
     <v-container fluid>
       <v-layout row wrap>
-        <v-flex xs12 md3 class="pa-3">
+        <v-flex xs12 md3 class="pa-1">
           <v-list two-line subheader class="elevation-3">
             <v-toolbar flat class="transparent">
               <v-list class="pa-0 grey darken-4" dark>
@@ -40,7 +40,7 @@
           </v-list>
         </v-flex>
 
-        <v-flex xs12 md9 class="pa-3">
+        <v-flex xs12 md9 class="pa-1">
           <router-view></router-view>
         </v-flex>
       </v-layout>
