@@ -9,7 +9,7 @@
         >
           <v-layout align-center justify-center fill-height row wrap>
             <v-flex xs12 class="text-xs-center">
-              <h2 class="display-3 mt-5">Our Services</h2>
+              <h2 class="display-3 mt-5">Trainings</h2>
             </v-flex>
           </v-layout>
         </v-parallax>
@@ -27,19 +27,11 @@
           <v-icon large color="green">fas fa-hard-hat</v-icon>
         </v-tab>
 
-        <v-tab href="#tab-3">
-          Events
-          <v-icon large color="green">event</v-icon>
-        </v-tab>
-
         <v-tab-item :value="'tab-' + 1">
           <EandS />
         </v-tab-item>
         <v-tab-item :value="'tab-' + 2">
           <Osh />
-        </v-tab-item>
-        <v-tab-item :value="'tab-' + 3">
-          <Events />
         </v-tab-item>
       </v-tabs>
     </div>
@@ -52,14 +44,12 @@
 <script>
 import EandS from "@/components/Services/EandS";
 import Osh from "@/components/Services/Osh";
-import Events from "@/components/Services/Events";
 
 export default {
   name: "Tranings",
   components: {
     EandS,
-    Osh,
-    Events
+    Osh
   },
   data() {
     return {};

@@ -48,9 +48,14 @@ export default {
       links: [
         { text: "Home", route: "/", icon: "fas fa-home" },
         {
-          text: "Services",
-          route: "/services",
+          text: "Trainings",
+          route: "/trainings",
           icon: "store_mall_directory"
+        },
+        {
+          text: "Events",
+          route: "/events",
+          icon: "fas fa-glass-cheers"
         },
         { text: "About", route: "/about", icon: "library_books" },
         { text: "Clients", route: "/clients", icon: "people" },

@@ -1,10 +1,13 @@
 import Vue from "vue";
 import Router from "vue-router";
 import Home from "./views/Home.vue";
-import Services from "./views/Services.vue";
+import Trainings from "./views/Trainings.vue";
+import Events from "./views/Events.vue";
 import Clients from "./views/Clients.vue";
 import About from "./views/About.vue";
 import Contact from "./views/Contact.vue";
+import BgcsAdmin from "./views/BgcsAdmin.vue";
+import AdminDashboard from "./views/AdminDashboard.vue";
 
 Vue.use(Router);
 
@@ -20,10 +23,16 @@ export default new Router({
       name: "home",
       component: Home
     },
+
     {
-      path: "/services",
-      name: "services",
-      component: Services
+      path: "/trainings",
+      name: "trainings",
+      component: Trainings
+    },
+    {
+      path: "/events",
+      name: "events",
+      component: Events
     },
     {
       path: "/clients",
@@ -39,6 +48,16 @@ export default new Router({
       path: "/contactUs",
       name: "contact",
       component: Contact
+    },
+    {
+      path: "/bgcsAdmin",
+      name: "bgcsAdmin",
+      component: BgcsAdmin
+    },
+    {
+      path: "/adminDashboard",
+      name: "adminDashboard",
+      component: AdminDashboard
     }
   ]
 });

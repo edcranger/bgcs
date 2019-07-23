@@ -1,16 +1,16 @@
 <template>
   <div class="team grey darken-3 pa-5">
     <h1 class="display-3 text-xs-center white--text">Our Team</h1>
-    <v-layout align-center justify-center row fill-height wrap>
+    <v-layout align-center justify-space-around row fill-height wrap>
       <v-flex
         xs12
         md2
-        class="text-xs-center white--text my-3"
+        class="text-xs-center white--text ma-5"
         v-for="(item, index) in team"
         :key="index"
       >
-        <v-avatar size="200" color="grey lighten-4">
-          <img :src="item.img" />
+        <v-avatar size="150" color="grey lighten-4">
+          <img :src="item.img" contain />
         </v-avatar>
         <h2 class="mt-3">{{item.name}}</h2>
         <p class="white--text">{{item.position}}</p>
@@ -31,7 +31,7 @@ export default {
           img: `https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRoSibEVq85qKMqEqR52_9KtW7CSZ5nKS4l3dyJfVi-t02vWLWS`
         },
         {
-          name: "Ma. Cindy S. MORTERA, R.N., E.M.T-B",
+          name: "Cindy Mortera, R.N., E.M.T-B",
           position: "VP Finance / Training Head",
           img: `https://preen.inquirer.net/files/2018/05/bea-alonzo-breakup-e1525846325572.jpg`
         },
@@ -48,7 +48,7 @@ export default {
         },
         {
           name: "Cris V. Corsanes",
-          position: "Sales Executive: ",
+          position: "Sales Executive ",
           img: `https://marriedbiography.com/wp-content/uploads/2017/06/derek-ramsay.jpg`
         }
       ]

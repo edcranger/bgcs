@@ -64,7 +64,7 @@
             </v-card>
           </v-hover>
         </v-flex>
-        <v-flex xs12 md4 class="pa-3">
+        <!-- <v-flex xs12 md4 class="pa-3">
           <v-hover>
             <v-card
               slot-scope="{ hover }"
@@ -94,7 +94,7 @@
               </v-card-text>
             </v-card>
           </v-hover>
-        </v-flex>
+        </v-flex>-->
       </v-layout>
     </v-container>
   </div>
