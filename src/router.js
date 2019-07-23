@@ -8,6 +8,10 @@ import About from "./views/About.vue";
 import Contact from "./views/Contact.vue";
 import BgcsAdmin from "./views/BgcsAdmin.vue";
 import AdminDashboard from "./views/AdminDashboard.vue";
+import Inquiries from "./views/Inquiries.vue";
+import Bookings from "./views/Bookings.vue";
+import Schedule from "./views/Schedule.vue";
+import AdminSettings from "./views/AdminSettings.vue";
 
 Vue.use(Router);
 
@@ -57,7 +61,31 @@ export default new Router({
     {
       path: "/adminDashboard",
       name: "adminDashboard",
-      component: AdminDashboard
+      component: AdminDashboard,
+      children: [
+        { path: "", component: Inquiries },
+        {
+          path: "inquiries",
+          name: "inquiries",
+          component: Inquiries
+        },
+
+        {
+          path: "bookings",
+          name: "bookings",
+          component: Bookings
+        },
+        {
+          path: "schedule",
+          name: "schedule",
+          component: Schedule
+        },
+        {
+          path: "adminSettings",
+          name: "adminSettings",
+          component: AdminSettings
+        }
+      ]
     }
   ]
 });

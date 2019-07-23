@@ -1,57 +1,24 @@
 <template>
-  <div class="booking mb-3">
-    <h1 class="display-3 text-xs-center font-weight-medium">Training Schedule</h1>
-    <p class="text-xs-center font-weight-medium">Check Out the available dates</p>
-    <v-container>
-      <v-layout row wrap class="elevation-3">
-        <v-toolbar color dark>
-          <i class="fas fa-calendar-alt fa-2x"></i>
-          <v-toolbar-title>Book a course</v-toolbar-title>
-          <v-spacer></v-spacer>
-          <v-btn icon>
-            <v-icon>search</v-icon>
-          </v-btn>
-        </v-toolbar>
-        <v-flex xs12 md3>
-          <div id="e3" class="px-2 py-2">
-            <v-layout row wrap>
-              <v-flex xs6 md12 class="pa-1">
-                <v-list two-line subheader>
-                  <v-subheader>Training</v-subheader>
+  <div class="schedule">
+    <v-card class="elevation-5 cardmessage">
+      <v-toolbar color="grey darken-4" dark>
+        <v-toolbar-title>Schedule</v-toolbar-title>
 
-                  <v-list-tile v-for="item in items" :key="item.title" avatar>
-                    <v-list-tile-avatar>
-                      <v-icon :class="[item.iconClass]">{{ item.icon }}</v-icon>
-                    </v-list-tile-avatar>
+        <v-spacer></v-spacer>
 
-                    <v-list-tile-content>
-                      <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-                    </v-list-tile-content>
-                  </v-list-tile>
-                </v-list>
-              </v-flex>
-              <v-flex xs6 md12 class="pa-1">
-                <v-list two-line subheader>
-                  <v-subheader>Legend</v-subheader>
+        <v-btn icon>
+          <v-icon>search</v-icon>
+        </v-btn>
 
-                  <v-list-tile v-for="item in items2" :key="item.title" avatar>
-                    <v-list-tile-avatar>
-                      <v-icon :class="[item.iconClass]">{{ item.icon }}</v-icon>
-                    </v-list-tile-avatar>
+        <v-btn icon>
+          <v-icon>check_circle</v-icon>
+        </v-btn>
+      </v-toolbar>
 
-                    <v-list-tile-content>
-                      <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-                    </v-list-tile-content>
-                  </v-list-tile>
-                </v-list>
-              </v-flex>
-            </v-layout>
-          </div>
-        </v-flex>
-        <!------------Calendar starts here--------------->
-        <v-flex xs12 md9 class="pa-1 py-3">
+      <v-layout row wrap>
+        <v-flex xs12 class="pa-3">
           <v-sheet height="500">
-            <v-calendar ref="calendar" v-model="start" :now="today" :value="today" color="primary">
+            <v-calendar ref="calendar" :value="today" color="primary" v-model="start">
               <template v-slot:day="{ date }">
                 <template v-for="event in eventsMap[date]">
                   <v-menu :key="event.title" v-model="event.open" full-width offset-x>
@@ -81,9 +48,7 @@
                       <v-card-title primary-title>
                         <span v-html="event.details"></span>
                       </v-card-title>
-                      <v-card-actions>
-                        <BookingForm />
-                      </v-card-actions>
+                      <v-card-actions></v-card-actions>
                       <v-card-actions>
                         <v-btn flat color="secondary">Cancel</v-btn>
                       </v-card-actions>
@@ -93,27 +58,22 @@
               </template>
             </v-calendar>
           </v-sheet>
-          <v-btn @click="$refs.calendar.prev()">
-            <v-icon dark left>keyboard_arrow_left</v-icon>Prev
-          </v-btn>
-          <v-btn @click="$refs.calendar.next()">
-            Next
-            <v-icon right dark>keyboard_arrow_right</v-icon>
-          </v-btn>
         </v-flex>
+        <v-btn @click="$refs.calendar.prev()">
+          <v-icon dark left>keyboard_arrow_left</v-icon>Prev
+        </v-btn>
+        <v-btn @click="$refs.calendar.next()">
+          Next
+          <v-icon right dark>keyboard_arrow_right</v-icon>
+        </v-btn>
       </v-layout>
-      <br />
-    </v-container>
+    </v-card>
   </div>
 </template>
 
 <script>
-import BookingForm from "@/components/Home/BookingForm";
 export default {
-  name: "Booking",
-  components: {
-    BookingForm
-  },
+  name: "Schedule",
   data() {
     return {
       start: "07-24-2019",
@@ -214,27 +174,9 @@ export default {
       this.events.forEach(e => (map[e.date] = map[e.date] || []).push(e));
       return map;
     }
-  },
-  methods: {
-    open(event) {
-      alert(event.title);
-    }
   }
 };
 </script>
 
-<style lang="stylus" scoped>
-.my-event {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  border-radius: 2px;
-  color: #ffffff;
-  border: 1px solid #1867c0;
-  width: 100%;
-  font-size: 12px;
-  padding: 3px;
-  cursor: pointer;
-  margin-bottom: 1px;
-}
+<style>
 </style>
