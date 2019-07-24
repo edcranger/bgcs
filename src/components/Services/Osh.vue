@@ -58,7 +58,13 @@ export default {
           img: require("@/assets/trainings/bosh.png"),
           courseOutline: [
             {
-              src: require("@/assets/trainings/course_outline/blsAha_co.png")
+              src: require("@/assets/trainings/course_outline/boshRev2.png")
+            },
+            {
+              src: require("@/assets/trainings/course_outline/mandatoryBosh.png")
+            },
+            {
+              src: require("@/assets/trainings/course_outline/mandatoryBosh2.png")
             }
           ]
         },
@@ -69,7 +75,7 @@ export default {
           img: require("@/assets/trainings/cosh.png"),
           courseOutline: [
             {
-              src: require("@/assets/trainings/course_outline/aclsAha_co.png")
+              src: require("@/assets/trainings/course_outline/coshRev2.png")
             }
           ]
         },
@@ -91,7 +97,10 @@ export default {
           img: require("@/assets/trainings/wat.png"),
           courseOutline: [
             {
-              src: require("@/assets/trainings/course_outline/ashiBls_co.png")
+              src: require("@/assets/trainings/course_outline/wah1.png")
+            },
+            {
+              src: require("@/assets/trainings/course_outline/wah2.png")
             }
           ]
         },
@@ -102,10 +111,10 @@ export default {
           img: require("@/assets/trainings/confined.png"),
           courseOutline: [
             {
-              src: require("@/assets/trainings/course_outline/blsPha2.png")
+              src: require("@/assets/trainings/course_outline/confine1.png")
             },
             {
-              src: require("@/assets/trainings/course_outline/blsPha3.png")
+              src: require("@/assets/trainings/course_outline/confine2.png")
             }
           ]
         },
@@ -116,10 +125,10 @@ export default {
           img: require("@/assets/trainings/loss.png"),
           courseOutline: [
             {
-              src: require("@/assets/trainings/course_outline/firstAid1.png")
+              src: require("@/assets/trainings/course_outline/lcm1.png")
             },
             {
-              src: require("@/assets/trainings/course_outline/firstAid2.png")
+              src: require("@/assets/trainings/course_outline/lcm2.png")
             }
           ]
         },
@@ -130,10 +139,10 @@ export default {
           img: require("@/assets/trainings/safetyAudit.png"),
           courseOutline: [
             {
-              src: require("@/assets/trainings/course_outline/blsAed2.png")
+              src: require("@/assets/trainings/course_outline/safetyAudit1.png")
             },
             {
-              src: require("@/assets/trainings/course_outline/blsAed3.png")
+              src: require("@/assets/trainings/course_outline/safetyAudit2.png")
             }
           ]
         },

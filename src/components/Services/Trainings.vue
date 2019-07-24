@@ -46,7 +46,7 @@ import EandS from "@/components/Services/EandS";
 import Osh from "@/components/Services/Osh";
 
 export default {
-  name: "Tranings",
+  name: "Trainings",
   components: {
     EandS,
     Osh

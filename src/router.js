@@ -12,6 +12,8 @@ import Inquiries from "./views/Inquiries.vue";
 import Bookings from "./views/Bookings.vue";
 import Schedule from "./views/Schedule.vue";
 import AdminSettings from "./views/AdminSettings.vue";
+import BookedList from "./views/BookedList.vue";
+import ViewMessage from "./views/ViewMessage.vue";
 
 Vue.use(Router);
 
@@ -84,6 +86,16 @@ export default new Router({
           path: "adminSettings",
           name: "adminSettings",
           component: AdminSettings
+        },
+        {
+          path: "bookedList",
+          name: "bookedList",
+          component: BookedList
+        },
+        {
+          path: "viewMessage/:id",
+          name: "viewMessage",
+          component: ViewMessage
         }
       ]
     }

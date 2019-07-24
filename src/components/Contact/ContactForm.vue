@@ -9,7 +9,7 @@
 
       <v-form ref="form" v-model="form" class="pa-3 pt-4">
         <v-text-field
-          v-model="name"
+          v-model="formdata.name"
           :rules="[rules.length(6)]"
           color="green  "
           counter="15"
@@ -19,26 +19,27 @@
           type="text"
         ></v-text-field>
         <v-text-field
-          v-model="phone"
+          v-model="formdata.phone"
+          :rules="[rules.length(11)]"
           color="green"
           label="Phone number"
-          mask="phone"
           class="white--text"
         ></v-text-field>
         <v-text-field
-          v-model="email"
+          v-model="formdata.email"
           :rules="[rules.email]"
           color="green"
           label="Email address"
           type="email"
         ></v-text-field>
-        <v-textarea v-model="message" auto-grow color="green" label="Message" rows="3"></v-textarea>
+        <v-textarea v-model="formdata.message" auto-grow color="green" label="Message" rows="3"></v-textarea>
       </v-form>
       <v-divider></v-divider>
       <v-card-actions>
         <v-btn flat @click="$refs.form.reset()">Clear</v-btn>
         <v-spacer></v-spacer>
         <v-btn
+          @click="submitInquiry()"
           :disabled="!form"
           :loading="isLoading"
           class="white--text"
@@ -51,32 +52,42 @@
 </template>
 
 <script>
+import db from "@/firebase/init";
 export default {
   name: "ContactForm",
   data() {
     return {
-      name: null,
-      agreement: false,
-      message: null,
+      formdata: {
+        name: null,
+        message: null,
+        email: undefined,
+        phone: undefined,
+        unread: true,
+        timestamp: Date.now()
+      },
       dialog: false,
-      email: undefined,
       form: false,
       isLoading: false,
-      password: undefined,
-      phone: undefined,
+
       rules: {
         email: v => (v || "").match(/@/) || "Please enter a valid email",
         length: len => v =>
           (v || "").length >= len ||
           `Invalid character length, required ${len}`,
-        password: v =>
-          (v || "").match(
-            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/
-          ) ||
-          "Password must contain an upper case letter, a numeric character, and a special character",
         required: v => !!v || "This field is required"
       }
     };
+  },
+  methods: {
+    submitInquiry() {
+      db.collection("inquiries")
+        .add(this.formdata)
+        .then(docRef => {
+          this.$refs.form.reset();
+          console.log("Document written with ID: ", docRef.id);
+        })
+        .catch(err => console.log(err));
+    }
   }
 };
 </script>

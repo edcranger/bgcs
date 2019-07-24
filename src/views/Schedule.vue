@@ -104,7 +104,7 @@
             </v-form>
             <v-divider></v-divider>
             <v-card-actions>
-              <v-btn flat @click="$refs.form.reset()">Clear</v-btn>
+              <v-btn flat @click="$refs.form.reset(), max = 0">Clear</v-btn>
               <v-spacer></v-spacer>
               <v-btn
                 :disabled="!form"
@@ -225,6 +225,12 @@ export default {
           title: "OSH",
           details: `<strong>(${3})</strong> Slots Left for the training`,
           date: "2019-07-23",
+          open: false
+        },
+        {
+          title: "OSH",
+          details: `<strong>(${3})</strong> Slots Left for the training`,
+          date: "2019-07-25",
           open: false
         }
       ],
