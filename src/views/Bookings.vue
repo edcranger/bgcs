@@ -19,14 +19,17 @@
         <v-data-table :headers="bookingData" :items="bookingList" class="elevation-3">
           <template v-slot:items="props">
             <td>
-              <router-link to="bookedList">{{ props.item.name }}</router-link>
+              <router-link
+                :to="{name: 'bookedList', params: {id: props.item.id}}"
+              >{{ props.item.schedType }}</router-link>
             </td>
             <td class="text-xs-left">{{ props.item.date }}</td>
-            <td class="text-xs-left">{{ props.item.type }}</td>
+            <td class="text-xs-left">{{ props.item.name }}</td>
             <td class="text-xs-left">{{ props.item.status }}</td>
-            <td class="text-xs-left">{{ props.item.slot }}</td>
+            <td class="text-xs-left">{{ props.item.max }}</td>
             <td class="text-xs-left">
-              <v-btn small color="primary">{{ props.item.action }}</v-btn>
+              <v-btn small color="primary" v-if="props.item.open">Open</v-btn>
+              <v-btn small color="primary" v-else-if="!props.item.open">close</v-btn>
             </td>
           </template>
         </v-data-table>
@@ -36,6 +39,7 @@
 </template>
 
 <script>
+import db from "@/firebase/init";
 export default {
   name: "Bookings",
   data() {
@@ -54,56 +58,7 @@ export default {
         { text: "Slot", value: "slot" },
         { text: "Action", value: "action" }
       ],
-      bookingList: [
-        {
-          name: "Training",
-          type: "BLS (AHA)",
-          date: "2019-07-23",
-          status: "In-coming",
-          slot: 3,
-          action: "Open"
-        },
-        {
-          name: "Training",
-          type: "ACLS (ASHI)",
-          date: "2019-07-30",
-          status: "Done",
-          slot: 0,
-          action: "Close"
-        },
-        {
-          name: "Training",
-          type: "BLS (AHA)",
-          date: "2019-07-24",
-          status: "In-coming",
-          slot: 3,
-          action: "Open"
-        },
-        {
-          name: "Training",
-          type: "First Aid",
-          date: "2019-07-12",
-          status: "Done",
-          slot: 5,
-          action: "Close"
-        },
-        {
-          name: "Training",
-          type: "BLS and ACLS",
-          date: "2019-08-02",
-          status: "In-coming",
-          slot: 20,
-          action: "Open"
-        },
-        {
-          name: "Training",
-          type: "Disaster Risk Reduction Management",
-          date: "2019-08-03",
-          status: "In-coming",
-          slot: 10,
-          action: "Open"
-        }
-      ],
+      bookingList: [],
       headers: [
         {
           text: "Name",
@@ -136,6 +91,27 @@ export default {
         }
       ]
     };
+  },
+  created() {
+    let ref = db.collection("schedule");
+
+    ref.onSnapshot(snapshot => {
+      snapshot.docChanges().forEach(change => {
+        if (change.type == "added") {
+          let doc = change.doc;
+          this.bookingList.push({
+            id: doc.id,
+            name: doc.data().name,
+            date: doc.data().date,
+            max: doc.data().max,
+            description: doc.data().description,
+            schedType: doc.data().schedType,
+            status: doc.data().status,
+            open: doc.data().open
+          });
+        }
+      });
+    });
   }
 };
 </script>

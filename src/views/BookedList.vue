@@ -37,6 +37,7 @@
 <script>
 export default {
   name: "BookedList",
+  props: ["eventId"],
   data() {
     return {
       headers: [

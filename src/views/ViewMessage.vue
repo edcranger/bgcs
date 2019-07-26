@@ -40,7 +40,7 @@ export default {
   created() {
     let ref = db
       .collection("inquiries")
-      .where("id", "==", this.$route.params.id);
+      .where("name", "==", this.$route.params.id);
     ref.get().then(snapshot => {
       snapshot.forEach(doc => {
         this.message = doc.data();

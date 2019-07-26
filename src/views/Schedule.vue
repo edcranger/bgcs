@@ -21,14 +21,14 @@
             <v-calendar ref="calendar" :value="today" color="primary" v-model="start">
               <template v-slot:day="{ date }">
                 <template v-for="event in eventsMap[date]">
-                  <v-menu :key="event.title" v-model="event.open" full-width offset-x>
+                  <v-menu :key="event.id" v-model="event.open" full-width offset-x>
                     <template v-slot:activator="{ on }">
                       <div
                         v-if="!event.time"
                         v-ripple
                         class="my-event green"
                         v-on="on"
-                        v-html="event.title"
+                        v-html="event.name"
                       ></div>
                     </template>
                     <v-card min-width="350px" flat>
@@ -36,7 +36,7 @@
                         <v-btn icon>
                           <v-icon>edit</v-icon>
                         </v-btn>
-                        <v-toolbar-title v-html="event.title"></v-toolbar-title>
+                        <v-toolbar-title v-html="event.name"></v-toolbar-title>
                         <v-spacer></v-spacer>
                         <v-btn icon>
                           <v-icon>favorite</v-icon>
@@ -45,10 +45,13 @@
                           <v-icon>more_vert</v-icon>
                         </v-btn>
                       </v-toolbar>
+
                       <v-card-title primary-title>
-                        <span v-html="event.details"></span>
+                        <p>Slot: {{event.max}}</p>
                       </v-card-title>
-                      <v-card-actions></v-card-actions>
+                      <v-card-actions>
+                        <p>Description: {{event.description}}</p>
+                      </v-card-actions>
                       <v-card-actions>
                         <v-btn flat color="secondary">Cancel</v-btn>
                       </v-card-actions>
@@ -90,11 +93,11 @@
         <v-flex xs12 class="pa-3">
           <v-card class="mx-auto">
             <v-form ref="form" v-model="form" class="pa-2">
-              <v-select v-model="name" :items="category" label="Schedule Type"></v-select>
-              <v-slider v-model="max" :label="`Attendies: ` + max"></v-slider>
-              <v-date-picker v-model="picker" color="green lighten-1"></v-date-picker>
+              <v-select v-model="schedForm.name" :items="category" label="Schedule Type"></v-select>
+              <v-slider v-model="schedForm.max" :label="`Attendies: ` + schedForm.max"></v-slider>
+              <v-date-picker v-model="schedForm.date" color="green lighten-1"></v-date-picker>
               <v-textarea
-                v-model="description"
+                v-model="schedForm.description"
                 auto-grow
                 color="green"
                 label="Description"
@@ -104,7 +107,7 @@
             </v-form>
             <v-divider></v-divider>
             <v-card-actions>
-              <v-btn flat @click="$refs.form.reset(), max = 0">Clear</v-btn>
+              <v-btn flat @click="$refs.form.reset(), schedForm.max = 0">Clear</v-btn>
               <v-spacer></v-spacer>
               <v-btn
                 :disabled="!form"
@@ -112,6 +115,7 @@
                 class="white--text"
                 color="deep-purple accent-4"
                 depressed
+                @click="createShedule()"
               >Create</v-btn>
             </v-card-actions>
           </v-card>
@@ -122,47 +126,49 @@
 </template>
 
 <script>
+import db from "@/firebase/init";
 export default {
   name: "Schedule",
 
   data() {
     return {
-      name: null,
-      agreement: false,
-      description: null,
-      dialog: false,
-      picker: undefined,
+      schedForm: {
+        schedType: "Training",
+        name: null,
+        description: null,
+        picker: null,
+        max: 0,
+        status: "In-coming",
+        open: false
+      },
       form: false,
       isLoading: false,
-      max: 0,
-      picker: new Date().toISOString().substr(0, 10),
-      password: undefined,
-      phone: undefined,
+
       category: [
         "----Emergency Trainings----",
-        "Advance Cardiovascular Life Support ACLS (ASHI)",
-        "Advance Cardiovascular Life Support ACLS (AHA)",
-        "Basic Life Support (ASHI)",
-        "Basic Life Support (AHA)",
-        "Basic Life Support with AED",
-        "Disaster Risk Reduction Management",
+        "ACLS (ASHI)",
+        "ACLS (AHA)",
+        "BLS (ASHI)",
+        "BLS (AHA)",
+        "BLS with AED",
+        "DRRM",
         "Earthquake Awareness and Emergency Management",
         "First Aid",
         "High Angle and Rope Rescue",
-        "Incident Command System (ICS)",
+        "ICS",
         "Search and Rescue",
         "------Occupation Safety and Health------",
-        "Basic Occupational Safety and Health (BOSH) ",
+        "BOSH ",
         "Behavior Based Safety",
         "Chemical Safety",
         "Confined Space Entry Training",
-        "Construction Occupational Safety and Health (COSH)",
+        "COSH",
         "HAZMAT",
-        "Loss Control Management (LCM)",
+        "LCM",
         "Risk Management",
-        "Safety Program Audit (SPA)",
-        "Train the Trainer (TTT)",
-        "Working at Heights (WAT)"
+        "SPA",
+        "TTT",
+        "WAH"
       ],
       rules: {
         email: v => (v || "").match(/@/) || "Please enter a valid email",
@@ -178,62 +184,7 @@ export default {
       },
       start: "07-24-2019",
       today: "07-24-2019",
-      events: [
-        {
-          title: "BLS (AHA)",
-          details: `<strong>(${3})</strong> Slots Left for the training`,
-          date: "2019-07-11",
-          open: false
-        },
-        {
-          title: "ACLS(AHA)",
-          details: `<strong>(${3})</strong> Slots Left for the training`,
-          date: "2019-07-12",
-          open: false
-        },
-        {
-          title: "BLS(ASHI)",
-          details: `<strong>(${3})</strong> Slots Left for the training`,
-          date: "2019-07-13",
-          open: false
-        },
-        {
-          title: "ACLS(ASHI)",
-          details: `<strong>(${3})</strong> Slots Left for the training`,
-          date: "2019-07-14",
-          open: false
-        },
-        {
-          title: "ACLS",
-          details: `<strong>(${3})</strong> Slots Left for the training`,
-          date: "2019-07-02",
-          open: false
-        },
-        {
-          title: "OSH",
-          details: `<strong>(${3})</strong> Slots Left for the training`,
-          date: "2019-07-22",
-          open: false
-        },
-        {
-          title: "OSH",
-          details: `<strong>(${3})</strong> Slots Left for the training`,
-          date: "2019-07-21",
-          open: false
-        },
-        {
-          title: "OSH",
-          details: `<strong>(${3})</strong> Slots Left for the training`,
-          date: "2019-07-23",
-          open: false
-        },
-        {
-          title: "OSH",
-          details: `<strong>(${3})</strong> Slots Left for the training`,
-          date: "2019-07-25",
-          open: false
-        }
-      ],
+      events: [],
       items: [
         {
           icon: "fas fa-first-aid",
@@ -273,12 +224,43 @@ export default {
       ]
     };
   },
+  created() {
+    let ref = db.collection("schedule").orderBy("picker");
+
+    ref.onSnapshot(snapshot => {
+      snapshot.docChanges().forEach(change => {
+        if (change.type == "added") {
+          let doc = change.doc;
+          this.events.push({
+            id: doc.id,
+            name: doc.data().name,
+            date: doc.data().date,
+            max: doc.data().max,
+            description: doc.data().description,
+            schedType: doc.data().schedType,
+            status: doc.data().status
+          });
+        }
+      });
+    });
+  },
   computed: {
     // convert the list of events into a map of lists keyed by date
     eventsMap() {
       const map = {};
       this.events.forEach(e => (map[e.date] = map[e.date] || []).push(e));
       return map;
+    }
+  },
+  methods: {
+    createShedule() {
+      db.collection("schedule")
+        .add(this.schedForm)
+        .then(docRef => {
+          this.$refs.form.reset();
+          console.log("Document written with ID: ", docRef.id);
+        })
+        .catch(err => console.log(err));
     }
   }
 };

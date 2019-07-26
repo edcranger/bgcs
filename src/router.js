@@ -88,7 +88,7 @@ export default new Router({
           component: AdminSettings
         },
         {
-          path: "bookedList",
+          path: "bookedList/:id",
           name: "bookedList",
           component: BookedList
         },

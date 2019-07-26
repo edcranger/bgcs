@@ -51,17 +51,17 @@
         <!------------Calendar starts here--------------->
         <v-flex xs12 md9 class="pa-1 py-3">
           <v-sheet height="500">
-            <v-calendar ref="calendar" v-model="start" :now="today" :value="today" color="primary">
+            <v-calendar ref="calendar" v-model="start" :value="today" color="primary">
               <template v-slot:day="{ date }">
                 <template v-for="event in eventsMap[date]">
-                  <v-menu :key="event.title" v-model="event.open" full-width offset-x>
+                  <v-menu :key="event.name" v-model="event.open" full-width offset-x>
                     <template v-slot:activator="{ on }">
                       <div
                         v-if="!event.time"
                         v-ripple
                         class="my-event green"
                         v-on="on"
-                        v-html="event.title"
+                        v-html="event.name"
                       ></div>
                     </template>
                     <v-card min-width="350px" flat>
@@ -69,7 +69,7 @@
                         <v-btn icon>
                           <v-icon>edit</v-icon>
                         </v-btn>
-                        <v-toolbar-title v-html="event.title"></v-toolbar-title>
+                        <v-toolbar-title v-html="event.name"></v-toolbar-title>
                         <v-spacer></v-spacer>
                         <v-btn icon>
                           <v-icon>favorite</v-icon>
@@ -79,10 +79,10 @@
                         </v-btn>
                       </v-toolbar>
                       <v-card-title primary-title>
-                        <span v-html="event.details"></span>
+                        <span v-html="event.description"></span>
                       </v-card-title>
                       <v-card-actions>
-                        <BookingForm />
+                        <BookingForm :eventId="event.id" />
                       </v-card-actions>
                       <v-card-actions>
                         <v-btn flat color="secondary">Cancel</v-btn>
@@ -108,6 +108,7 @@
 </template>
 
 <script>
+import db from "@/firebase/init";
 import BookingForm from "@/components/Home/BookingForm";
 export default {
   name: "Booking",
@@ -118,56 +119,7 @@ export default {
     return {
       start: "07-24-2019",
       today: "07-24-2019",
-      events: [
-        {
-          title: "BLS (AHA)",
-          details: `<strong>(${3})</strong> Slots Left for the training`,
-          date: "2019-07-11",
-          open: false
-        },
-        {
-          title: "ACLS(AHA)",
-          details: `<strong>(${3})</strong> Slots Left for the training`,
-          date: "2019-07-12",
-          open: false
-        },
-        {
-          title: "BLS(ASHI)",
-          details: `<strong>(${3})</strong> Slots Left for the training`,
-          date: "2019-07-13",
-          open: false
-        },
-        {
-          title: "ACLS(ASHI)",
-          details: `<strong>(${3})</strong> Slots Left for the training`,
-          date: "2019-07-14",
-          open: false
-        },
-        {
-          title: "ACLS",
-          details: `<strong>(${3})</strong> Slots Left for the training`,
-          date: "2019-07-02",
-          open: false
-        },
-        {
-          title: "OSH",
-          details: `<strong>(${3})</strong> Slots Left for the training`,
-          date: "2019-07-22",
-          open: false
-        },
-        {
-          title: "OSH",
-          details: `<strong>(${3})</strong> Slots Left for the training`,
-          date: "2019-07-21",
-          open: false
-        },
-        {
-          title: "OSH",
-          details: `<strong>(${3})</strong> Slots Left for the training`,
-          date: "2019-07-23",
-          open: false
-        }
-      ],
+      events: [],
       items: [
         {
           icon: "fas fa-first-aid",
@@ -219,6 +171,26 @@ export default {
     open(event) {
       alert(event.title);
     }
+  },
+  created() {
+    let ref = db.collection("schedule");
+
+    ref.onSnapshot(snapshot => {
+      snapshot.docChanges().forEach(change => {
+        if (change.type == "added") {
+          let doc = change.doc;
+          this.events.push({
+            id: doc.id,
+            name: doc.data().name,
+            date: doc.data().date,
+            max: doc.data().max,
+            description: doc.data().description,
+            schedType: doc.data().schedType,
+            status: doc.data().status
+          });
+        }
+      });
+    });
   }
 };
 </script>

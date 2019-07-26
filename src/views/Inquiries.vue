@@ -20,7 +20,12 @@
       <v-list two-line>
         <div v-for="messages in inquiryData" :key="messages.id" @click="readMessage(messages.id)">
           <template>
-            <v-list-tile route avatar ripple :to="{name: 'viewMessage', params: {id:messages.id}}">
+            <v-list-tile
+              route
+              avatar
+              ripple
+              :to="{name: 'viewMessage', params: {id:messages.name,}}"
+            >
               <v-list-tile-content>
                 <v-list-tile-title>
                   <v-icon
