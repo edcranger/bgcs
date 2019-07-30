@@ -41,7 +41,7 @@
         </v-flex>
 
         <v-flex xs12 md9 class="pa-1">
-          <router-view></router-view>
+          <router-view @bookingNumber="bookingNumbers"></router-view>
         </v-flex>
       </v-layout>
     </v-container>
@@ -52,6 +52,11 @@
 export default {
   name: "AdminDashboard",
   components: {},
+  methods: {
+    bookingNumbers(word) {
+      console.log(word);
+    }
+  },
   data() {
     return {
       dashBoardMenu: [

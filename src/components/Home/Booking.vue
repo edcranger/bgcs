@@ -79,7 +79,10 @@
                         </v-btn>
                       </v-toolbar>
                       <v-card-title primary-title>
-                        <span v-html="event.description"></span>
+                        <span>
+                          Available slot:
+                          <strong>{{event.max}}</strong>
+                        </span>
                       </v-card-title>
                       <v-card-actions>
                         <BookingForm :eventId="event.id" />
