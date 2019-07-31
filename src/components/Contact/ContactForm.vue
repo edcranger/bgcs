@@ -48,6 +48,21 @@
         >Submit</v-btn>
       </v-card-actions>
     </v-card>
+    <v-dialog v-model="contactSubmitDialog" persistent max-width="390">
+      <v-card>
+        <v-card-title class="headline">Confirmation</v-card-title>
+        <v-card-text>
+          Your inquiry was sent! Our representative will contact you shortly.
+          <br />
+          <br />Thank you
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+
+          <v-btn color="green darken-1" text @click="contactSubmitDialog = false">Close</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -65,6 +80,7 @@ export default {
         unread: true,
         timestamp: Date.now()
       },
+      contactSubmitDialog: false,
       dialog: false,
       form: false,
       isLoading: false,
@@ -84,7 +100,7 @@ export default {
         .add(this.formdata)
         .then(docRef => {
           this.$refs.form.reset();
-          console.log("Document written with ID: ", docRef.id);
+          this.contactSubmitDialog = true;
         })
         .catch(err => console.log(err));
     }

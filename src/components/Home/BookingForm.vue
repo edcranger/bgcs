@@ -6,7 +6,7 @@
       </template>
       <v-card>
         <v-card-text>
-          <v-container grid-list-md>
+          <!-- <v-container grid-list-md>
             <v-layout wrap>
               <v-flex xs12>
                 <span class="headline">Booking Form</span>
@@ -38,14 +38,71 @@
                 ></v-autocomplete>
               </v-flex>
             </v-layout>
+          </v-container>-->
+          <v-container grid-list-md>
+            <h2>Booking Form</h2>
+            <v-form ref="form" v-model="form" class="pa-1 pt-4">
+              <v-text-field
+                label="Full Name*"
+                :rules="[rules.length(10)]"
+                v-model="bookForm.name"
+                required
+              ></v-text-field>
+
+              <v-text-field
+                label="Email*"
+                :rules="[rules.email]"
+                type="email"
+                v-model="bookForm.email"
+                required
+              ></v-text-field>
+
+              <v-text-field
+                label="Phone*"
+                :rules="[rules.length(11)]"
+                type="number"
+                v-model="bookForm.phone"
+                required
+              ></v-text-field>
+
+              <v-select
+                :items="['0-17', '18-29', '30-54', '54+']"
+                label="Age*"
+                :rules="[rules.required]"
+                v-model="bookForm.age"
+                required
+              ></v-select>
+
+              <v-autocomplete
+                :items="['Nurse', 'Pharmacists', 'Doctor', 'Others','Non Medical']"
+                label="Occupation"
+                v-model="bookForm.occupation"
+              ></v-autocomplete>
+            </v-form>
           </v-container>
           <small>*indicates required field</small>
-          <p>{{eventId}}</p>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
+          <v-btn flat @click="$refs.form.reset()">Clear</v-btn>
           <v-btn color="blue darken-1" flat @click="dialog = false">Close</v-btn>
-          <v-btn color="blue darken-1" flat @click="submitBooking()">Submit</v-btn>
+          <v-btn color="blue darken-1" flat @click="submitBooking()" :disabled="!form">Submit</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+    <v-dialog v-model="bookingSubmitDialog" persistent max-width="390">
+      <v-card>
+        <v-card-title class="headline">Confirmation</v-card-title>
+        <v-card-text>
+          Booking inquiry sent! Please wait for our representative to contact you.
+          <br />
+          <br />Thank you
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+
+          <v-btn color="green darken-1" text @click="bookingSubmitDialog = false">Close</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -59,6 +116,8 @@ export default {
   props: ["eventId"],
   data() {
     return {
+      bookingSubmitDialog: false,
+      form: false,
       bookForm: {
         idOfTraining: this.eventId,
         name: null,
@@ -71,7 +130,14 @@ export default {
         referrence: "-----",
         action: false
       },
-      dialog: false
+      dialog: false,
+      rules: {
+        email: v => (v || "").match(/@/) || "Please enter a valid email",
+        length: len => v =>
+          (v || "").length >= len ||
+          `Invalid character length, required ${len}`,
+        required: v => !!v || "This field is required"
+      }
     };
   },
   methods: {
@@ -79,7 +145,8 @@ export default {
       db.collection("bookings")
         .add(this.bookForm)
         .then(docRef => {
-          console.log("Document written with ID: ", docRef.id);
+          this.dialog = false;
+          this.bookingSubmitDialog = true;
         })
         .catch(err => console.log(err));
     }

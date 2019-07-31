@@ -15,17 +15,23 @@
         </v-btn>
       </v-toolbar>
 
-      <v-list three-line>
+      <v-list three-line class="pa-0">
         <v-data-table :headers="sceduleDataHeader" :items="scheduleData" class="elevation-3">
           <template v-slot:items="props">
-            <td>
-              <router-link :to="{name: 'bookedList', params: {id: props.item.id}}">View</router-link>
+            <td class="text-xs-left">
+              <span>{{ props.item.date | moment("MMM, D") }}</span>
             </td>
-            <td class="text-xs-left">{{ props.item.date }}</td>
-            <td class="text-xs-left">{{ props.item.name }}</td>
+            <td class="text-xs-left">
+              <router-link
+                style="text-decoration:none"
+                :to="{name: 'bookedList', params: {id: props.item.id}}"
+              >{{ props.item.name }}</router-link>
+            </td>
             <td class="text-xs-left">{{ props.item.status }}</td>
             <td class="text-xs-left">{{ props.item.max }}</td>
-            <td class="text-xs-left">{{ remainingSlot(props.item.id, props.item.max) }}</td>
+            <td
+              :class="[remainingSlot(props.item.id, props.item.max) != 'Full' ? 'text-xs-left'  : 'error--text']"
+            >{{ remainingSlot(props.item.id, props.item.max) }}</td>
             <td class="text-xs-left">{{ enrolledNumber(props.item.id) }}</td>
             <td class="text-xs-left">{{inquiredNumber(props.item.id)}}</td>
           </template>
@@ -42,51 +48,52 @@ export default {
   data() {
     return {
       sceduleDataHeader: [
-        {
-          text: "Schedule",
-          align: "left",
-          sortable: false,
-          value: "name"
-        },
         { text: "Date", value: "date" },
         { text: "Type", value: "type" },
         { text: "Status", value: "status" },
         { text: "Total slot", value: "slot" },
-        { text: "Avail slot", value: "slot" },
-        { text: "Enrolled", value: "slot" },
-        { text: "Inquired", value: "action" }
+        { text: "Avail slot", value: "avail" },
+        { text: "Enrolled", value: "enrolled" },
+        { text: "Inquired", value: "inquired" }
       ],
       scheduleData: [],
       scheduleCensus: []
     };
   },
   methods: {
-    inquiredNumber(eds) {
+    inquiredNumber(id) {
       let number = 0;
       this.scheduleCensus.forEach(census => {
-        if (census.trainingId == eds) {
+        if (census.trainingId == id) {
           number++;
         }
       });
       return number;
     },
-    enrolledNumber(eds) {
+    enrolledNumber(id) {
       let number = 0;
       this.scheduleCensus.forEach(census => {
-        if (census.trainingId == eds && census.status == "confirmed") {
+        if (census.trainingId == id && census.status == "confirmed") {
           number++;
         }
       });
       return number;
     },
-    remainingSlot(eds, max) {
+    remainingSlot(id, max) {
       let number = 0;
+      let result;
       this.scheduleCensus.forEach(census => {
-        if (census.trainingId == eds && census.status == "confirmed") {
+        if (census.trainingId == id && census.status == "confirmed") {
           number++;
         }
       });
-      return max - number;
+      result = max - number;
+
+      if (result == 0) {
+        return "Full";
+      } else {
+        return `${result}`;
+      }
     }
   },
   created() {

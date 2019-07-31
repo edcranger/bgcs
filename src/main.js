@@ -8,6 +8,7 @@ import VueLazyLoad from "vue-lazyload";
 require("vue-image-lightbox/dist/vue-image-lightbox.min.css");
 
 Vue.use(VueLazyLoad);
+Vue.use(require("vue-moment"));
 
 Vue.config.productionTip = false;
 

@@ -2,7 +2,7 @@
   <div class="admin-dashboard">
     <v-container fluid>
       <v-layout row wrap>
-        <v-flex xs12 md3 class="pa-1">
+        <v-flex xs12 md3 class="pa-1 hidden-sm-and-down">
           <v-list two-line subheader class="elevation-3">
             <v-toolbar flat class="transparent">
               <v-list class="pa-0 grey darken-4" dark>
@@ -31,17 +31,43 @@
 
               <v-list-tile-action>
                 <v-badge color="red mr-4">
-                  <template v-slot:badge>
-                    <!-- <span v-if="unReadCount != 0 && menuData.badge">{{unReadCount}}</span> -->
-                  </template>
+                  <template v-slot:badge></template>
                 </v-badge>
               </v-list-tile-action>
             </v-list-tile>
           </v-list>
         </v-flex>
 
+        <!-- side appearing modal -->
+        <v-speed-dial
+          class="hidden-md-and-up"
+          v-model="fab"
+          right
+          direction="right"
+          :transition="transition"
+        >
+          <template v-slot:activator>
+            <v-btn v-model="fab" color="blue darken-2" dark fab>
+              <v-icon v-if="fab">close</v-icon>
+              <v-icon v-else>menu</v-icon>
+            </v-btn>
+          </template>
+          <v-btn
+            v-for="(item, index) in dashBoardMenu"
+            @click.stop="fab = true"
+            :key="index"
+            route
+            :to="item.route"
+            fab
+            dark
+            small
+            color="green"
+          >
+            <v-icon fab class="white--text">{{item.icon}}</v-icon>
+          </v-btn>
+        </v-speed-dial>
         <v-flex xs12 md9 class="pa-1">
-          <router-view @bookingNumber="bookingNumbers"></router-view>
+          <router-view></router-view>
         </v-flex>
       </v-layout>
     </v-container>
@@ -52,13 +78,11 @@
 export default {
   name: "AdminDashboard",
   components: {},
-  methods: {
-    bookingNumbers(word) {
-      console.log(word);
-    }
-  },
+  methods: {},
   data() {
     return {
+      fab: true,
+      transition: "slide-y-reverse-transition",
       dashBoardMenu: [
         {
           title: "Dashboard",
@@ -96,6 +120,6 @@ export default {
 
 <style>
 .admin-dashboard {
-  margin-top: 80px;
+  margin-top: 50px;
 }
 </style>

@@ -12,10 +12,10 @@
             <v-icon>search</v-icon>
           </v-btn>
         </v-toolbar>
-        <v-flex xs12 md3>
-          <div id="e3" class="px-2 py-2">
+        <v-flex xs12 md12 class="hidden-sm-and-down">
+          <div id="e3" class="px-2">
             <v-layout row wrap>
-              <v-flex xs6 md12 class="pa-1">
+              <v-flex xs6 md6 class="pa-1">
                 <v-list two-line subheader>
                   <v-subheader>Training</v-subheader>
 
@@ -30,7 +30,7 @@
                   </v-list-tile>
                 </v-list>
               </v-flex>
-              <v-flex xs6 md12 class="pa-1">
+              <v-flex xs6 md6 class="pa-1">
                 <v-list two-line subheader>
                   <v-subheader>Legend</v-subheader>
 
@@ -49,60 +49,74 @@
           </div>
         </v-flex>
         <!------------Calendar starts here--------------->
-        <v-flex xs12 md9 class="pa-1 py-3">
-          <v-sheet height="500">
-            <v-calendar ref="calendar" v-model="start" :value="today" color="primary">
-              <template v-slot:day="{ date }">
-                <template v-for="event in eventsMap[date]">
-                  <v-menu :key="event.name" v-model="event.open" full-width offset-x>
-                    <template v-slot:activator="{ on }">
-                      <div
-                        v-if="!event.time"
-                        v-ripple
-                        class="my-event green"
-                        v-on="on"
-                        v-html="event.name"
-                      ></div>
-                    </template>
-                    <v-card min-width="350px" flat>
-                      <v-toolbar color="primary" dark>
-                        <v-btn icon>
-                          <v-icon>edit</v-icon>
-                        </v-btn>
-                        <v-toolbar-title v-html="event.name"></v-toolbar-title>
-                        <v-spacer></v-spacer>
-                        <v-btn icon>
-                          <v-icon>favorite</v-icon>
-                        </v-btn>
-                        <v-btn icon>
-                          <v-icon>more_vert</v-icon>
-                        </v-btn>
-                      </v-toolbar>
-                      <v-card-title primary-title>
-                        <span>
-                          Available slot:
-                          <strong>{{event.max}}</strong>
-                        </span>
-                      </v-card-title>
-                      <v-card-actions>
-                        <BookingForm :eventId="event.id" />
-                      </v-card-actions>
-                      <v-card-actions>
-                        <v-btn flat color="secondary">Cancel</v-btn>
-                      </v-card-actions>
-                    </v-card>
-                  </v-menu>
+
+        <v-flex xs12 md12 class>
+          <v-container fluid>
+            <v-sheet height="100%">
+              <div class="text-xs-center">
+                <v-btn @click="$refs.calendar.prev()" class="my-1">
+                  <v-icon dark left>keyboard_arrow_left</v-icon>Prev
+                </v-btn>
+                <span class="mx-3">{{ this.start | moment("MMMM") }}</span>
+                <v-btn @click="$refs.calendar.next()">
+                  Next
+                  <v-icon right dark>keyboard_arrow_right</v-icon>
+                </v-btn>
+              </div>
+              <v-calendar ref="calendar" v-model="start" :value="today" color="primary">
+                <template v-slot:day="{ date }">
+                  <template v-for="event in eventsMap[date]">
+                    <v-menu :key="event.name" v-model="event.open" full-width offset-x>
+                      <template v-slot:activator="{ on }">
+                        <div
+                          v-if="!event.time"
+                          v-ripple
+                          :class="[remainingSlot(event.id,event.max) != 'Fully Booked' ? 'primary my-event'  : 'error']"
+                          dark
+                          v-on="on"
+                          v-html="event.name"
+                        ></div>
+                      </template>
+                      <v-card min-width="100px" max-width="150px" flat>
+                        <v-toolbar
+                          :class="[remainingSlot(event.id,event.max) != 'Fully Booked' ? 'primary' : 'error']"
+                          dark
+                        >
+                          <!-- <v-btn icon>
+                            <v-icon>edit</v-icon>
+                          </v-btn>-->
+                          <v-toolbar-title>
+                            <h6>{{event.name}}</h6>
+                          </v-toolbar-title>
+                          <v-spacer></v-spacer>
+                          <v-btn icon>
+                            <v-icon>favorite</v-icon>
+                          </v-btn>
+                          <!-- <v-btn icon>
+                            <v-icon>more_vert</v-icon>
+                          </v-btn>-->
+                        </v-toolbar>
+                        <v-card-title primary-title>
+                          <span>
+                            <strong>{{remainingSlot(event.id,event.max)}}</strong>
+                          </span>
+                        </v-card-title>
+                        <v-card-actions>
+                          <BookingForm
+                            v-if="remainingSlot(event.id,event.max) != 'Fully Booked'"
+                            :eventId="event.id"
+                          />
+                        </v-card-actions>
+                        <v-card-actions>
+                          <v-btn flat color="secondary">Cancel</v-btn>
+                        </v-card-actions>
+                      </v-card>
+                    </v-menu>
+                  </template>
                 </template>
-              </template>
-            </v-calendar>
-          </v-sheet>
-          <v-btn @click="$refs.calendar.prev()">
-            <v-icon dark left>keyboard_arrow_left</v-icon>Prev
-          </v-btn>
-          <v-btn @click="$refs.calendar.next()">
-            Next
-            <v-icon right dark>keyboard_arrow_right</v-icon>
-          </v-btn>
+              </v-calendar>
+            </v-sheet>
+          </v-container>
         </v-flex>
       </v-layout>
       <br />
@@ -120,9 +134,12 @@ export default {
   },
   data() {
     return {
+      activeClass: "primary",
+      errorClass: "error",
       start: "07-24-2019",
       today: "07-24-2019",
       events: [],
+      scheduleCensus: [],
       items: [
         {
           icon: "fas fa-first-aid",
@@ -173,10 +190,27 @@ export default {
   methods: {
     open(event) {
       alert(event.title);
+    },
+    remainingSlot: function(id, max) {
+      let number = 0;
+      let result;
+      this.scheduleCensus.forEach(census => {
+        if (census.trainingId == id && census.status == "confirmed") {
+          number++;
+        }
+      });
+      result = max - number;
+
+      if (result == 0) {
+        return "Fully Booked";
+      } else {
+        return `Available slot  ${result}`;
+      }
     }
   },
   created() {
     let ref = db.collection("schedule");
+    let ref2 = db.collection("bookings");
 
     ref.onSnapshot(snapshot => {
       snapshot.docChanges().forEach(change => {
@@ -194,6 +228,20 @@ export default {
         }
       });
     });
+
+    ref2.onSnapshot(snapshot => {
+      snapshot.docChanges().forEach(change => {
+        if (change.type == "added") {
+          let doc = change.doc;
+          this.scheduleCensus.push({
+            id: doc.id,
+            trainingId: doc.data().idOfTraining,
+            status: doc.data().status
+          });
+        }
+      });
+    });
+    console.log(this.scheduleCensus);
   }
 };
 </script>
