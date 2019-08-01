@@ -85,7 +85,7 @@
                           v-html="event.name"
                         ></div>
                       </template>
-                      <v-card min-width="100px" max-width="150px" flat>
+                      <v-card width="100%" flat>
                         <v-toolbar
                           :class="[remainingSlot(event.id,event.max) != 'Fully Booked' ? 'primary' : 'error']"
                           dark
