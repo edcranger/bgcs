@@ -21,7 +21,7 @@
                 <v-icon>fas fa-heartbeat</v-icon>
               </v-btn>
 
-              <h3 class="display-1 font-weight-light mb-2">Edison Ocampo</h3>
+              <h3 class="display-1 font-weight-light mb-2">Emergency and Technical Rescue</h3>
             </v-card-text>
           </v-card>
         </v-hover>
