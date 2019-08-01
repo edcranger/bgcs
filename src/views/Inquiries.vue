@@ -24,7 +24,7 @@
               <v-list-tile-content>
                 <router-link
                   class="inquiryLink"
-                  :to="{name: 'viewMessage', params: {id:messages.name,}}"
+                  :to="{name: 'viewMessage', params: {id:messages.id , inquiryData: inquiryData}}"
                 >
                   <v-list-tile-title>
                     <v-icon
@@ -86,7 +86,7 @@ export default {
     };
   },
   created() {
-    let ref = db.collection("inquiries").orderBy("timestamp", "asc");
+    let ref = db.collection("inquiries").orderBy("timestamp", "desc");
 
     ref.onSnapshot(snapshot => {
       snapshot.docChanges().forEach(change => {
@@ -131,18 +131,8 @@ export default {
         .update({
           unread: false
         })
-        .then(() => {
-          console.log("updated");
-        })
+        .then(() => {})
         .catch(err => console.log(err));
-    }
-  },
-  watch: {
-    inquiryData: {
-      handler(val) {
-        console.log(this.inquiryData);
-      },
-      deep: true
     }
   }
 };

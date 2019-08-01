@@ -14,10 +14,11 @@ import Schedule from "./views/Schedule.vue";
 import AdminSettings from "./views/AdminSettings.vue";
 import BookedList from "./views/BookedList.vue";
 import ViewMessage from "./views/ViewMessage.vue";
+import firebase from "firebase";
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   mode: "history",
   base: process.env.BASE_URL,
   scrollBehavior() {
@@ -64,6 +65,9 @@ export default new Router({
       path: "/adminDashboard",
       name: "adminDashboard",
       component: AdminDashboard,
+      meta: {
+        requiresAuth: true
+      },
       children: [
         { path: "", component: Inquiries },
         {
@@ -95,9 +99,25 @@ export default new Router({
         {
           path: "viewMessage/:id",
           name: "viewMessage",
-          component: ViewMessage
+          component: ViewMessage,
+          props: true
         }
       ]
     }
   ]
 });
+
+router.beforeEach((to, from, next) => {
+  const requiresAuth = to.matched.some(x => x.meta.requiresAuth);
+  const currentUser = firebase.auth().currentUser;
+
+  if (requiresAuth && !currentUser) {
+    next({ name: "bgcsAdmin" });
+  } else if (requiresAuth && currentUser) {
+    next();
+  } else {
+    next();
+  }
+});
+
+export default router;

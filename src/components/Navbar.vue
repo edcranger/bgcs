@@ -38,6 +38,7 @@
 </template>
 
 <script>
+import firebase from "firebase";
 export default {
   name: "Navbar",
   message: "eds",
@@ -62,6 +63,10 @@ export default {
         { text: "Contact Us", route: "/contactUs", icon: "phonelink_ring" }
       ]
     };
+  },
+  created() {
+    let user = firebase.auth().currentUser;
+    console.log(`the user is ${user.uid}`);
   }
 };
 </script>

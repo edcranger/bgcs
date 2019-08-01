@@ -15,7 +15,7 @@
         </v-btn>
       </v-toolbar>
 
-      <v-list three-line class="pa-0">
+      <v-list three-line class="pa-0 hidden-sm-and-down">
         <v-data-table :headers="sceduleDataHeader" :items="scheduleData" class="elevation-3">
           <template v-slot:items="props">
             <td class="text-xs-left">
@@ -37,6 +37,63 @@
           </template>
         </v-data-table>
       </v-list>
+
+      <v-container fluid grid-list-md class="hidden-md-and-up">
+        <v-data-iterator
+          :items="scheduleData"
+          :rows-per-page-items="rowsPerPageItems"
+          :pagination.sync="pagination"
+          content-tag="v-layout"
+          row
+          wrap
+        >
+          <template v-slot:item="props">
+            <v-flex xs12 sm6 md4 lg3>
+              <v-card>
+                <v-card-title>
+                  <h4>
+                    <router-link
+                      style="text-decoration:none"
+                      :to="{name: 'bookedList', params: {id: props.item.id}}"
+                    >{{ props.item.name }}</router-link>
+                  </h4>
+                </v-card-title>
+                <v-divider></v-divider>
+                <v-list dense>
+                  <v-list-tile>
+                    <v-list-tile-content>Date:</v-list-tile-content>
+                    <v-list-tile-content class="align-end">
+                      <span>{{ props.item.date | moment("MMM, D") }}</span>
+                    </v-list-tile-content>
+                  </v-list-tile>
+                  <v-list-tile>
+                    <v-list-tile-content>Status:</v-list-tile-content>
+                    <v-list-tile-content class="align-end">{{ props.item.status }}</v-list-tile-content>
+                  </v-list-tile>
+                  <v-list-tile>
+                    <v-list-tile-content>Total Slot:</v-list-tile-content>
+                    <v-list-tile-content class="align-end">{{ props.item.max }}</v-list-tile-content>
+                  </v-list-tile>
+                  <v-list-tile>
+                    <v-list-tile-content>Avail Slot:</v-list-tile-content>
+                    <v-list-tile-content
+                      :class="[remainingSlot(props.item.id, props.item.max) != 'Full' ? 'align-end'  : 'error--text align-end']"
+                    >{{ remainingSlot(props.item.id, props.item.max) }}</v-list-tile-content>
+                  </v-list-tile>
+                  <v-list-tile>
+                    <v-list-tile-content>Enrolled:</v-list-tile-content>
+                    <v-list-tile-content class="align-end">{{ enrolledNumber(props.item.id) }}</v-list-tile-content>
+                  </v-list-tile>
+                  <v-list-tile>
+                    <v-list-tile-content>Inquired:</v-list-tile-content>
+                    <v-list-tile-content class="align-end">{{inquiredNumber(props.item.id)}}</v-list-tile-content>
+                  </v-list-tile>
+                </v-list>
+              </v-card>
+            </v-flex>
+          </template>
+        </v-data-iterator>
+      </v-container>
     </v-card>
   </div>
 </template>
@@ -47,6 +104,10 @@ export default {
   name: "Bookings",
   data() {
     return {
+      rowsPerPageItems: [4, 8, 12],
+      pagination: {
+        rowsPerPage: 4
+      },
       sceduleDataHeader: [
         { text: "Date", value: "date" },
         { text: "Type", value: "type" },
@@ -97,7 +158,7 @@ export default {
     }
   },
   created() {
-    let ref1 = db.collection("schedule");
+    let ref1 = db.collection("schedule").orderBy("date", "desc");
     let ref2 = db.collection("bookings");
 
     ref1.onSnapshot(snapshot => {

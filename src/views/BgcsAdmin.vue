@@ -7,7 +7,7 @@
             <v-img height="300" :src="require('@/assets/logo3.png')" contain></v-img>
             <v-card-text>
               <div class="layout column align-center"></div>
-              <v-form dark>
+              <v-form ref="form" v-model="form" dark>
                 <v-text-field
                   append-icon="person"
                   name="login"
@@ -32,7 +32,14 @@
             </v-card-text>
             <div class="login-btn">
               <v-spacer></v-spacer>
-              <v-btn @click="login" block color="green" class="white--text" :loading="loading">Login</v-btn>
+              <v-btn
+                @click="login"
+                block
+                color="green"
+                :disabled="!form"
+                class="white--text"
+                :loading="loading"
+              >Login</v-btn>
             </div>
           </v-card>
         </v-flex>
@@ -42,22 +49,33 @@
 </template>
 
 <script>
+import firebase from "firebase";
 import Footer from "@/components/Footer";
 export default {
-  name: "admin14",
-  data: () => ({
-    loading: false,
-    email: "",
-    password: "",
-    rules: {
-      required: value => !!value || "Required.",
-      min: v => v.length >= 8 || "Min 8 characters",
-      email: v => (v || "").match(/@/) || "Please enter a valid email"
-    }
-  }),
+  name: "BgcsAdmin",
+  data() {
+    return {
+      form: false,
+      loading: false,
+      email: "",
+      password: "",
+      rules: {
+        required: value => !!value || "Required.",
+        min: v => v.length >= 8 || "Min 8 characters",
+        email: v => (v || "").match(/@/) || "Please enter a valid email"
+      }
+    };
+  },
   methods: {
     login() {
-      this.$router.replace("/adminDashboard");
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(this.email, this.password)
+        .then(cred => {
+          console.log(cred.user);
+          this.$router.replace("/adminDashboard");
+        })
+        .catch(err => console.log(err));
     }
   },
   mounted() {}

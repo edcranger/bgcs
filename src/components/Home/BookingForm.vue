@@ -144,7 +144,8 @@ export default {
     submitBooking() {
       db.collection("bookings")
         .add(this.bookForm)
-        .then(docRef => {
+        .then(() => {
+          this.$refs.form.reset();
           this.dialog = false;
           this.bookingSubmitDialog = true;
         })

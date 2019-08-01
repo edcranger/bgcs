@@ -1,29 +1,57 @@
 <template>
   <div class="view-message">
-    <div class="mt-5">
-      <v-list-tile avatar>
-        <v-list-tile-content>
-          <v-list-tile-title>{{message.name}}</v-list-tile-title>
-          <v-list-tile-sub-title>Name</v-list-tile-sub-title>
-        </v-list-tile-content>
-      </v-list-tile>
+    <v-layout row>
+      <v-flex xs12>
+        <div v-for="(item, index) in inquiryData  " :key="index">
+          <v-card v-if="item.id == param">
+            <v-toolbar color="grey darken-4" dark>
+              <router-link to="/adminDashboard" style="text-decoration:none">
+                <i class="far fa-arrow-alt-circle-left fa-2x white--text"></i>
+              </router-link>
 
-      <v-list-tile avatar>
-        <v-list-tile-content>
-          <v-list-tile-title>{{message.phone}}</v-list-tile-title>
-          <v-list-tile-sub-title>Phone</v-list-tile-sub-title>
-        </v-list-tile-content>
-      </v-list-tile>
+              <v-toolbar-title>{{ item.timestamp | moment("MMM D, YYYY") }}</v-toolbar-title>
 
-      <v-list-tile avatar>
-        <v-list-tile-content>
-          <v-list-tile-title>{{message.email}}</v-list-tile-title>
-          <v-list-tile-sub-title>Email</v-list-tile-sub-title>
-        </v-list-tile-content>
-      </v-list-tile>
+              <v-spacer></v-spacer>
+            </v-toolbar>
 
-      <p style="text-align: justify " class="pa-3">{{message.message}}</p>
-    </div>
+            <v-list subheader three-line>
+              <v-list-tile>
+                <v-list-tile-content>
+                  <v-list-tile-title>
+                    <i class="far fa-user mr-2"></i>
+                    <strong>{{item.name}}</strong>
+                  </v-list-tile-title>
+                  <v-list-tile-sub-title></v-list-tile-sub-title>
+                  <v-list-tile-sub-title>
+                    <i class="fas fa-envelope-square mr-2"></i>
+                    {{item.email}}
+                  </v-list-tile-sub-title>
+                  <v-list-tile-sub-title>
+                    <i class="fas fa-phone-alt mr-2"></i>
+                    {{item.phone}}
+                  </v-list-tile-sub-title>
+                </v-list-tile-content>
+              </v-list-tile>
+
+              <v-list-tile class>
+                <i class="fas fa-comments mr-2"></i>
+                {{item.message}}
+              </v-list-tile>
+            </v-list>
+
+            <v-divider></v-divider>
+            <div class="text-xs-right pa-3">
+              <a
+                style="text-decoration:none"
+                :href="`mailto:${item.email}?subject=BGCS%20Inquiry%20Response&body=Hi ${item.name}, `"
+              >
+                <i class="fas fa-reply mr-1"></i>Reply to Email
+              </a>
+            </div>
+          </v-card>
+        </div>
+      </v-flex>
+    </v-layout>
   </div>
 </template>
 
@@ -31,23 +59,13 @@
 import db from "@/firebase/init";
 export default {
   name: "ViewMessage",
+  props: ["inquiryData"],
   data() {
     return {
-      param: this.$route.params.id,
-      message: []
+      param: this.$route.params.id
     };
   },
-  created() {
-    let ref = db
-      .collection("inquiries")
-      .where("name", "==", this.$route.params.id);
-    ref.get().then(snapshot => {
-      snapshot.forEach(doc => {
-        this.message = doc.data();
-        this.message.id = doc.id;
-      });
-    });
-  }
+  created() {}
 };
 </script>
 

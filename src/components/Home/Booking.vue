@@ -2,7 +2,7 @@
   <div class="booking mb-3">
     <h1 class="display-3 text-xs-center font-weight-medium">Training Schedule</h1>
     <p class="text-xs-center font-weight-medium">Check Out the available dates</p>
-    <v-container>
+    <v-container fluid>
       <v-layout row wrap class="elevation-3">
         <v-toolbar color dark>
           <i class="fas fa-calendar-alt fa-2x"></i>
@@ -54,14 +54,22 @@
           <v-container fluid>
             <v-sheet height="100%">
               <div class="text-xs-center">
-                <v-btn @click="$refs.calendar.prev()" class="my-1">
-                  <v-icon dark left>keyboard_arrow_left</v-icon>Prev
-                </v-btn>
-                <span class="mx-3">{{ this.start | moment("MMMM") }}</span>
-                <v-btn @click="$refs.calendar.next()">
-                  Next
-                  <v-icon right dark>keyboard_arrow_right</v-icon>
-                </v-btn>
+                <v-layout align-center justify-space-between row fill-height>
+                  <v-flex xs4>
+                    <v-btn @click="$refs.calendar.prev()" class="my-1">
+                      <v-icon dark left>keyboard_arrow_left</v-icon>Prev
+                    </v-btn>
+                  </v-flex>
+                  <v-flex xs4>
+                    <h3>{{ this.start | moment("MMMM") }}</h3>
+                  </v-flex>
+                  <v-flex xs4>
+                    <v-btn @click="$refs.calendar.next()">
+                      Next
+                      <v-icon right dark>keyboard_arrow_right</v-icon>
+                    </v-btn>
+                  </v-flex>
+                </v-layout>
               </div>
               <v-calendar ref="calendar" v-model="start" :value="today" color="primary">
                 <template v-slot:day="{ date }">
@@ -241,7 +249,6 @@ export default {
         }
       });
     });
-    console.log(this.scheduleCensus);
   }
 };
 </script>

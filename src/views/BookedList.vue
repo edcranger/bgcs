@@ -15,7 +15,7 @@
         </v-btn>
       </v-toolbar>
 
-      <v-list three-line>
+      <v-list three-line class="hidden-sm-and-down">
         <v-data-table :headers="headers" :items="bookings" class="elevation-1">
           <template v-slot:items="props">
             <td>{{ props.item.name }}</td>
@@ -26,6 +26,7 @@
             <td class="text-xs-left">
               <v-btn
                 small
+                v-show="props.item.show"
                 v-if="props.item.status == 'Not confirmed'"
                 color="primary"
                 @click="uniqueActivateForm(props.item.id)"
@@ -34,14 +35,30 @@
                 <!-- Activation Dialog -->
               </v-btn>
               <v-btn
+                v-if="!props.item.referrenceCancelBooking  && props.item.status == 'confirmed'"
                 small
-                v-if="props.item.status == 'confirmed'"
                 color="error"
-                @click="cancelBooking(props.item.id)"
+                @click="uniqueCancelationConfirmation(props.item.id)"
               >
                 Cancel
                 <!-- Activation Dialog -->
               </v-btn>
+              <div v-if="props.item.referrenceCancelBooking" class="text-xs-center">
+                <v-layout row>
+                  <v-flex xs6>
+                    <v-btn fab small color="green" flat @click="cancelBooking(props.item.id)">Yes</v-btn>
+                  </v-flex>
+                  <v-flex xs6>
+                    <v-btn
+                      fab
+                      small
+                      color="red"
+                      flat
+                      @click="props.item.referrenceCancelBooking = !props.item.referrenceCancelBooking"
+                    >No</v-btn>
+                  </v-flex>
+                </v-layout>
+              </div>
 
               <div v-if="props.item.referrenceInputForm">
                 <v-text-field label="Referrence #:" v-model="props.item.referrenceNumber"></v-text-field>
@@ -51,6 +68,100 @@
           </template>
         </v-data-table>
       </v-list>
+
+      <v-container fluid grid-list-md class="hidden-md-and-up">
+        <v-data-iterator
+          :items="bookings"
+          :rows-per-page-items="rowsPerPageItems"
+          :pagination.sync="pagination"
+          content-tag="v-layout"
+          row
+          wrap
+        >
+          <template v-slot:item="props">
+            <v-flex xs12 sm6 md4 lg3>
+              <v-card>
+                <v-card-title>
+                  <h4>{{ props.item.name }}</h4>
+                </v-card-title>
+                <v-divider></v-divider>
+                <v-list dense>
+                  <v-list-tile>
+                    <v-list-tile-content>Status:</v-list-tile-content>
+                    <v-list-tile-content class="align-end">
+                      <span>{{ props.item.status }}</span>
+                    </v-list-tile-content>
+                  </v-list-tile>
+                  <v-list-tile>
+                    <v-list-tile-content>Payment:</v-list-tile-content>
+                    <v-list-tile-content class="align-end">{{ props.item.payment }}</v-list-tile-content>
+                  </v-list-tile>
+                  <v-list-tile>
+                    <v-list-tile-content>Phone:</v-list-tile-content>
+                    <v-list-tile-content class="align-end">{{ props.item.phone }}</v-list-tile-content>
+                  </v-list-tile>
+                  <v-list-tile>
+                    <v-list-tile-content>Referrence:</v-list-tile-content>
+                    <v-list-tile-content class="align-end">{{ props.item.referrence }}</v-list-tile-content>
+                  </v-list-tile>
+                  <v-layout row wrap>
+                    <v-flex xs3 v-if="props.item.status == 'Not confirmed'">
+                      <v-btn
+                        small
+                        v-show="props.item.show"
+                        color="primary"
+                        @click="uniqueActivateForm(props.item.id)"
+                      >
+                        Activate
+                        <!-- Activation Dialog -->
+                      </v-btn>
+                    </v-flex>
+                    <v-flex xs3 v-else-if="props.item.status == 'confirmed'">
+                      <v-btn
+                        v-if="!props.item.referrenceCancelBooking"
+                        small
+                        color="error"
+                        @click="uniqueCancelationConfirmation(props.item.id)"
+                      >
+                        Cancel
+                        <!-- Activation Dialog -->
+                      </v-btn>
+                      <div v-if="props.item.referrenceCancelBooking" class="text-xs-center">
+                        <v-layout row>
+                          <v-flex xs6>
+                            <v-btn
+                              fab
+                              small
+                              color="green"
+                              flat
+                              @click="cancelBooking(props.item.id)"
+                            >Yes</v-btn>
+                          </v-flex>
+                          <v-flex xs6>
+                            <v-btn
+                              fab
+                              small
+                              color="red"
+                              flat
+                              @click="props.item.referrenceCancelBooking = !props.item.referrenceCancelBooking"
+                            >No</v-btn>
+                          </v-flex>
+                        </v-layout>
+                      </div>
+                    </v-flex>
+                    <v-flex xs9 v-if="props.item.referrenceInputForm">
+                      <v-text-field label="Referrence #:" v-model="props.item.referrenceNumber"></v-text-field>
+                      <v-btn small color="success" @click="confirmBooking(props.item.id)">enter</v-btn>
+                      <v-btn small color="error" @click="uniqueActivateForm(props.item.id)">cancel</v-btn>
+                    </v-flex>
+                    <v-flex xs3 v-if="props.item.referrenceInputForm"></v-flex>
+                  </v-layout>
+                </v-list>
+              </v-card>
+            </v-flex>
+          </template>
+        </v-data-iterator>
+      </v-container>
     </v-card>
   </div>
 </template>
@@ -61,6 +172,11 @@ export default {
   name: "BookedList",
   data() {
     return {
+      show: true,
+      rowsPerPageItems: [4, 8, 12],
+      pagination: {
+        rowsPerPage: 4
+      },
       idParams: this.$route.params.id,
       cancelationDialog: false,
       activationDialog: false,
@@ -99,7 +215,9 @@ export default {
             referrence: doc.data().referrence,
             action: doc.data().action,
             referrenceInputForm: false,
-            referrenceNumber: doc.data().referrence
+            referrenceNumber: doc.data().referrence,
+            show: true,
+            referrenceCancelBooking: false
           });
         }
         if (change.type === "modified") {
@@ -118,7 +236,9 @@ export default {
                   referrence: doc.data().referrence,
                   action: doc.data().action,
                   referrenceInputForm: false,
-                  referrenceNumber: doc.data().referrence
+                  referrenceNumber: doc.data().referrence,
+                  show: true,
+                  referrenceCancelBooking: false
                 });
               });
             });
@@ -127,10 +247,18 @@ export default {
     });
   },
   methods: {
+    uniqueCancelationConfirmation: function(id) {
+      this.bookings.forEach(book => {
+        if (book.id === id) {
+          book.referrenceCancelBooking = !book.referrenceCancelBooking;
+        }
+      });
+    },
     uniqueActivateForm: function(id) {
       this.bookings.forEach(book => {
         if (book.id === id) {
           book.referrenceInputForm = !book.referrenceInputForm;
+          book.show = !book.show;
         }
       });
     },

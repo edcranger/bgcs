@@ -1,6 +1,6 @@
 <template>
   <div class="gallery">
-    <v-container>
+    <v-container fluid>
       <h1 class="display-3 text-xs-center font-weight-medium">Photo Gallery</h1>
       <p class="text-xs-center font-weight-medium">Check Out Our Photos</p>
       <v-layout align-center justify-center row fill-height wrap class="elevation-3">

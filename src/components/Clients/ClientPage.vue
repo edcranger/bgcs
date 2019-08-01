@@ -4,7 +4,9 @@
       <v-layout align-center justify-space-around row fill-height wrap>
         <v-flex xs12 class="text-xs-center mb-5">
           <i class="fas fa-handshake fa-10x"></i>
-          <h1>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Veniam quas delectus nemo ad quibusdam sunt obcaecati qui officia neque ducimus adipisci veritatis aut, quam eos alias. Ea qui ullam neque.</h1>
+          <h1
+            class="subheading"
+          >Lorem ipsum dolor sit, amet consectetur adipisicing elit. Veniam quas delectus nemo ad quibusdam sunt obcaecati qui officia neque ducimus adipisci veritatis aut, quam eos alias. Ea qui ullam neque.</h1>
         </v-flex>
 
         <v-flex
@@ -12,10 +14,10 @@
           md4
           v-for="(item, index) in items"
           :key="index"
-          class="mt-5 pa-5 text-xs-center"
+          class="mt-5 pa-4 text-xs-center"
         >
           <!-- <h3 class="text-xs-center">{{item.name}}</h3> -->
-          <v-img width="300" :src="item.img"></v-img>
+          <v-img width="100%" :src="item.img" contain></v-img>
         </v-flex>
       </v-layout>
     </v-container>

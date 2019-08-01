@@ -14,7 +14,7 @@
                   </v-list-tile-avatar>
 
                   <v-list-tile-content>
-                    <v-list-tile-title>Cindy Mae</v-list-tile-title>
+                    <v-list-tile-title>{{showUser}}</v-list-tile-title>
                   </v-list-tile-content>
                 </v-list-tile>
               </v-list>
@@ -75,12 +75,30 @@
 </template>
 
 <script>
+import db from "@/firebase/init";
+import firebase from "firebase";
 export default {
   name: "AdminDashboard",
   components: {},
-  methods: {},
+  computed: {
+    showUser: function() {
+      return this.adminData.adminName;
+    }
+  },
+  created() {
+    let ref = db
+      .collection("admin")
+      .where("adminId", "==", firebase.auth().currentUser.uid);
+    ref.get().then(snapshot => {
+      snapshot.forEach(doc => {
+        this.adminData = doc.data();
+        this.adminData.id = doc.id;
+      });
+    });
+  },
   data() {
     return {
+      adminData: [],
       fab: true,
       transition: "slide-y-reverse-transition",
       dashBoardMenu: [
