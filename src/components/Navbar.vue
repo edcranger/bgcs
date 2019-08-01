@@ -65,8 +65,8 @@ export default {
     };
   },
   created() {
-    let user = firebase.auth().currentUser;
-    console.log(`the user is ${user.uid}`);
+
+
   }
 };
 </script>
