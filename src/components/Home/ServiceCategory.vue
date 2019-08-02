@@ -6,7 +6,7 @@
           <v-card slot-scope="{ hover }" class="mx-auto" color="grey darken-4" width="100%" dark>
             <v-img
               :aspect-ratio="16/9"
-              src="https://images.pexels.com/photos/1893606/pexels-photo-1893606.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260"
+              :src="require('@/assets/picheaders/emergency.jpg')"
             >
               <v-expand-transition>
                 <div
@@ -31,7 +31,7 @@
           <v-card slot-scope="{ hover }" class="mx-auto" color="grey darken-4" width="100%" dark>
             <v-img
               :aspect-ratio="16/9"
-              src="http://workinfinite.com/wp-content/uploads/2018/11/work-safety-health.jpg"
+              :src="require('@/assets/picheaders/osh.jpg')"
             >
               <v-expand-transition>
                 <div
