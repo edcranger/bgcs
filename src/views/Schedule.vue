@@ -26,7 +26,7 @@
                   </v-btn>
                 </v-flex>
                 <v-flex xs4>
-                  <h2>{{ this.start | moment("MMMM") }}</h2>
+                  <h2>{{new Date() | moment("MMMM") }}</h2>
                 </v-flex>
                 <v-flex xs4>
                   <v-btn @click="$refs.calendar.next()">
@@ -59,8 +59,9 @@
                         </v-btn>
                         <v-toolbar-title v-html="event.name"></v-toolbar-title>
                         <v-spacer></v-spacer>
-                        <v-btn icon>
-                          <v-icon>favorite</v-icon>
+                        <!-- To delete all the bookings add firebase function then match it with the parent ID(ID) -->
+                        <v-btn icon @click="deleteSchedule(event.id)">
+                          <v-icon>delete</v-icon>
                         </v-btn>
                         <v-btn icon>
                           <v-icon>more_vert</v-icon>
@@ -151,6 +152,7 @@
 </template>
 
 <script>
+import moment from "moment";
 import db from "@/firebase/init";
 export default {
   name: "Schedule",
@@ -201,8 +203,8 @@ export default {
           `Invalid character length, required ${len}`,
         required: v => !!v || "This field is required"
       },
-      start: "07-24-2019",
-      today: "07-24-2019",
+      start: moment().format("MM-D-YYYY"),
+      today: moment().format("MM-D-YYYY"),
       events: [],
       scheduleCensus: [],
       items: [
@@ -310,6 +312,27 @@ export default {
       } else {
         return `Available slot  ${result}`;
       }
+    },
+    deleteSchedule(id) {
+      let idToErase;
+      this.scheduleCensus.forEach(sched => {
+        if (sched.trainingId == id) {
+          console.log(sched.id);
+          db.collection("bookings")
+            .doc(sched.id)
+            .delete()
+            .then(() => {});
+        }
+      });
+
+      db.collection("schedule")
+        .doc(id)
+        .delete()
+        .then(() => {
+          this.events = this.events.filter(event => {
+            return event.id != id;
+          });
+        });
     }
   }
 };
@@ -317,3 +340,5 @@ export default {
 
 <style>
 </style>
+
+
