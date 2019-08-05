@@ -13,7 +13,10 @@
             SUPERB
             <span class="light-green--text">EVENTS</span> HANDLING
           </h1>
-          <h3>BGCS will come train your group and/or come to your facility at your convenience. We have taught groups as small as 6 and as large as 300. We have also taught classes at 5am and 11pm. You pick the time and the place. We are here or there for you!</h3>
+          <h3>
+            Experience events with BGCS like no other!
+            Our creative team has a big heart for the craft, having more than 16 years of experience handling different types of events nationwide and with involvement & knowledge in conducting events for international crowds and serving clients from around the world.
+          </h3>
           <v-btn color="success" class="mt-2" route :to="{ name: 'events' }">More</v-btn>
         </v-flex>
       </v-layout>

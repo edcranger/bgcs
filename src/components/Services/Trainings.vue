@@ -8,7 +8,7 @@
           height="200"
         >
           <v-layout align-center justify-center fill-height row wrap>
-            <v-flex xs12 class="text-xs-center">
+            <v-flex xs12 class="toper text-xs-center">
               <h2 class="display-3 mt-5">Trainings</h2>
             </v-flex>
           </v-layout>

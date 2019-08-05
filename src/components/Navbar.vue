@@ -1,14 +1,31 @@
 <template>
   <div class="nav">
     <nav>
-      <v-toolbar app class="black" dark>
+      <v-toolbar app class="black" height="100" dark>
         <v-toolbar-side-icon @click="drawer = !drawer" class="hidden-md-and-up grey darken-4"></v-toolbar-side-icon>
-        <v-img :src="require('@/assets/logo3.png')" class="mr-5" contain max-width="115" />
+        <v-img :src="require('@/assets/logo3.png')" class="mr-5 my-1" contain max-width="220" />
 
         <v-spacer></v-spacer>
 
-        <div v-for="link in links" :key="link.text" class="hidden-sm-and-down">
-          <v-btn flat app class="light-green--text" route :to="link.route">{{link.text}}</v-btn>
+        <div class="hidden-sm-and-down">
+          <v-btn flat app class="light-green--text" route to="/">Home</v-btn>
+          <v-menu offset-y>
+            <v-btn flat slot="activator" class="light-green--text">
+              <v-icon left>expand_more</v-icon>
+              <span>Services</span>
+            </v-btn>
+            <v-list class="light-green darken-2">
+              <v-list-tile route to="/trainings">
+                <v-list-tile-title class="white--text">Trainings</v-list-tile-title>
+              </v-list-tile>
+              <v-list-tile route to="/events">
+                <v-list-tile-title class="white--text">Events</v-list-tile-title>
+              </v-list-tile>
+            </v-list>
+          </v-menu>
+          <v-btn flat app class="light-green--text" route to="/about">About</v-btn>
+          <v-btn flat app class="light-green--text" route to="/clients">Clients</v-btn>
+          <v-btn flat app class="light-green--text" route to="/contactUs">Contact Us</v-btn>
         </div>
       </v-toolbar>
 
@@ -23,15 +40,59 @@
           <div></div>
         </v-layout>
         <v-list>
-          <v-list-tile v-for="link in links" :key="link.text" router :to="link.route">
+          <v-list-tile route to="/">
             <v-list-tile-action>
-              <v-icon class="white--text">{{link.icon}}</v-icon>
+              <v-icon class="white--text">fas fa-home</v-icon>
             </v-list-tile-action>
             <v-list-tile-content>
-              <v-list-tile-title class="white--text">{{link.text}}</v-list-tile-title>
+              <v-list-tile-title class="white--text">Home</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
         </v-list>
+        <v-list class="white--text">
+          <v-list-group class="white--text" value="true">
+            <template v-slot:activator>
+              <v-list-tile>
+                <v-icon class="mr-4 white--text">store_mall_directory</v-icon>
+                <v-list-tile-title>Services</v-list-tile-title>
+              </v-list-tile>
+            </template>
+
+            <v-list-tile class="ml-5" route to="/trainings">
+              <v-icon class="mr-2 white--text">store_mall_directory</v-icon>
+              <v-list-tile-title>Training</v-list-tile-title>
+            </v-list-tile>
+
+            <v-list-tile class="ml-5" route to="/events">
+              <v-icon class="mr-2 white--text">fas fa-glass-cheers</v-icon>
+              <v-list-tile-title>Event</v-list-tile-title>
+            </v-list-tile>
+          </v-list-group>
+        </v-list>
+        <v-list-tile route to="/about">
+          <v-list-tile-action>
+            <v-icon class="white--text">library_books</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title class="white--text">About</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        <v-list-tile route to="/clients">
+          <v-list-tile-action>
+            <v-icon class="white--text">people</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title class="white--text">Clients</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        <v-list-tile route to="/contactUs">
+          <v-list-tile-action>
+            <v-icon class="white--text">phonelink_ring</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title class="white--text">Contact Us</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
       </v-navigation-drawer>
     </nav>
   </div>
@@ -64,10 +125,7 @@ export default {
       ]
     };
   },
-  created() {
-
-
-  }
+  created() {}
 };
 </script>
 

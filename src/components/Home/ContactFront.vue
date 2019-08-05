@@ -24,7 +24,7 @@
 
             <v-list-tile-content>
               <v-list-tile-title>(02) 936.5845 | (02) 897.6200</v-list-tile-title>
-              <v-list-tile-sub-title>Mobile</v-list-tile-sub-title>
+              <v-list-tile-sub-title>Telephone</v-list-tile-sub-title>
             </v-list-tile-content>
           </v-list-tile>
 
@@ -49,7 +49,7 @@
 
             <v-list-tile-content>
               <v-list-tile-title>csmbgcs@gmail.com</v-list-tile-title>
-              <v-list-tile-sub-title>Marketing & Services</v-list-tile-sub-title>
+              <v-list-tile-sub-title>Training</v-list-tile-sub-title>
             </v-list-tile-content>
           </v-list-tile>
 

@@ -7,7 +7,7 @@
         height="200"
       >
         <v-layout align-center justify-center fill-height row wrap>
-          <v-flex xs12 class="text-xs-center">
+          <v-flex xs12 class="toper text-xs-center">
             <h2 class="display-3 mt-5">Contact Us</h2>
           </v-flex>
         </v-layout>
@@ -40,7 +40,7 @@
 
                 <v-list-tile-content>
                   <v-list-tile-title>(02) 936.5845 | (02) 897.6200</v-list-tile-title>
-                  <v-list-tile-sub-title>Mobile</v-list-tile-sub-title>
+                  <v-list-tile-sub-title>Telephone</v-list-tile-sub-title>
                 </v-list-tile-content>
               </v-list-tile>
 
@@ -65,7 +65,7 @@
 
                 <v-list-tile-content>
                   <v-list-tile-title>csmbgcs@gmail.com</v-list-tile-title>
-                  <v-list-tile-sub-title>Marketing & Services</v-list-tile-sub-title>
+                  <v-list-tile-sub-title>Training</v-list-tile-sub-title>
                 </v-list-tile-content>
               </v-list-tile>
 

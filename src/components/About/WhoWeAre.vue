@@ -1,5 +1,5 @@
 <template>
-  <div class="who-we-ar">
+  <div class="who-we-are">
     <v-container fluid>
       <v-layout align-center justify-space-between row wrap class="my-3">
         <v-flex xs12 sm12 md6 class="text-xs-center">
@@ -33,15 +33,16 @@
         </v-flex>
       </v-layout>
     </v-container>
-    <v-layout align-center row wrap class="grey lighten-3 my-3 pa-5">
+    <v-layout align-center row wrap class="grey lighten-3 my-3 pa-3">
       <v-flex xs10 offset-xs1 class="text-xs-center">
         <h1 class="mb-3">
           <span class="light-green--text">What</span>
           We do?
         </h1>
-        <h3
-          class="mb-5 text-xs-center subheading"
-        >BGCS Marketing & Services Corporation is a team of medical professionals and creative production people serving top brands and companies nationwide, handling both Safety Training & Events Management. We thrive in focusing our engagements in advocating Health and Safety through highly effective Training Programs and in leveraging personal relationship to increase organizational and brand awareness by delivering efficient Events Management services.</h3>
+        <h3 class="mb-5 text-xs-center subheading">
+          Hike up your sales. Turn your brand into a household name. Throw the most exciting event in town. BGCS knows how to do all these and more.
+          From its roots as a Safety Training Services firm, BGCS has now grown into a one-stop-shop that offers both professional and creative services to match the client’s needs. We strive to evolve and find the spot in identifying key characteristics where it can be of help to a company we partnered.
+        </h3>
         <h3 class="word1 mb-5"></h3>
       </v-flex>
 
@@ -71,7 +72,7 @@
             <span class="title font-weight-light">Innovation</span>
           </v-card-title>
 
-          <v-card-text class="font-weight-bold">
+          <v-card-text class="font-weight-regular">
             "We are current! We are not afraid of new ideas and concepts but rather we formulate systems and frameworks to serve as a governing foundation.
             We improve and provide solutions suitable to the presenting needs. We continue to move forward as the industry demands us to be!"
           </v-card-text>
@@ -85,7 +86,7 @@
             <span class="title font-weight-light">Passion</span>
           </v-card-title>
 
-          <v-card-text class="font-weight-bold">
+          <v-card-text class="font-weight-regular">
             "Passion drives us! It motivates us! We continue to be enthusiastic in what we do to have a mutual sharing of skills and knowledge for the betterment of any project we are in.
             Our credibility is nurtured from life experiences and dedication. Our commitment brings about quality, efficiency and competency. We persevere and thus we only produce and serve the best."
           </v-card-text>
@@ -100,7 +101,7 @@
           </v-card-title>
 
           <v-card-text
-            class="subheading font-weight-bold"
+            class="subheading font-weight-regular"
           >"These are the foundation of what we do and what we offer! These are not only fundamental in our everyday encounter, but it is our culture to proactively incorporate these in our overall management framework and operations."</v-card-text>
         </v-card>
       </v-flex>
