@@ -35,6 +35,16 @@
                 <!-- Activation Dialog -->
               </v-btn>
               <v-btn
+                small
+                v-show="props.item.show"
+                v-if="props.item.status == 'Not confirmed'"
+                color="warning"
+                @click="deleteBookingInquiry(props.item.id)"
+              >
+                Delete
+                <!-- Activation Dialog -->
+              </v-btn>
+              <v-btn
                 v-if="!props.item.referrenceCancelBooking  && props.item.status == 'confirmed'"
                 small
                 color="error"
@@ -105,7 +115,7 @@
                     <v-list-tile-content class="align-end">{{ props.item.referrence }}</v-list-tile-content>
                   </v-list-tile>
                   <v-layout row wrap>
-                    <v-flex xs3 v-if="props.item.status == 'Not confirmed'">
+                    <v-flex xs3 v-if="props.item.status == 'Not confirmed'" class="mr-4">
                       <v-btn
                         small
                         v-show="props.item.show"
@@ -113,6 +123,17 @@
                         @click="uniqueActivateForm(props.item.id)"
                       >
                         Activate
+                        <!-- Activation Dialog -->
+                      </v-btn>
+                    </v-flex>
+                    <v-flex xs3 v-if="props.item.status == 'Not confirmed'">
+                      <v-btn
+                        small
+                        v-show="props.item.show"
+                        color="warning"
+                        @click="deleteBookingInquiry(props.item.id)"
+                      >
+                        Delete
                         <!-- Activation Dialog -->
                       </v-btn>
                     </v-flex>
@@ -293,6 +314,29 @@ export default {
               console.log(this.bookings);
               console.log(`${book.referrenceNumber} of ${id}`);
             });
+        }
+      });
+    },
+    deleteBookingInquiry: function(id) {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+      }).then(result => {
+        if (result.value) {
+          db.collection("bookings")
+            .doc(id)
+            .delete()
+            .then(() => {
+              this.bookings = this.bookings.filter(booking => {
+                return booking.id != id;
+              });
+            });
+          Swal.fire("Deleted!", "Booking has been deleted.", "success");
         }
       });
     }

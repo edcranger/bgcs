@@ -82,7 +82,7 @@ export default {
         {
           name: "Train the Trainer (TTT)",
           dialog: false,
-          space: true,
+          space: false,
           img: require("@/assets/trainings/trainTrainer.png"),
           courseOutline: [
             {
@@ -91,9 +91,9 @@ export default {
           ]
         },
         {
-          name: "Working at Heights (WAT)",
+          name: "Working at Heights (WAH)",
           dialog: false,
-          space: true,
+          space: false,
           img: require("@/assets/trainings/wat.png"),
           courseOutline: [
             {

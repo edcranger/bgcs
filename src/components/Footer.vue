@@ -3,7 +3,13 @@
     <v-footer dark height="auto">
       <v-card flat tile class="footer light-green darken-2 white--text text-xs-center">
         <v-card-text>
-          <v-btn v-for="icon in icons" :key="icon" class="mx-3 white--text" :href="icon.link" icon>
+          <v-btn
+            v-for="icon in icons"
+            :key="icon.id"
+            class="mx-3 white--text"
+            :href="icon.link"
+            icon
+          >
             <v-icon size="24px">{{ icon.iconType }}</v-icon>
           </v-btn>
         </v-card-text>
@@ -37,12 +43,14 @@ export default {
     return {
       icons: [
         {
+          id: 1,
           link: `https://www.facebook.com/teamBGCS/?ref=profile_intro_card`,
           iconType: "fab fa-facebook"
         },
         {
-          link: `https://www.facebook.com/EVENTSbyBGCS/`,
-          iconType: "fab fa-facebook"
+          id: 2,
+          link: `https://www.instagram.com/teambgcs/`,
+          iconType: "fab fa-instagram"
         }
       ]
     };

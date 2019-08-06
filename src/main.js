@@ -6,6 +6,9 @@ import App from "./App.vue";
 import router from "./router";
 import VueLazyLoad from "vue-lazyload";
 import firebase from "firebase";
+import Swal from "sweetalert2";
+
+window.Swal = Swal;
 
 require("vue-image-lightbox/dist/vue-image-lightbox.min.css");
 

@@ -314,25 +314,38 @@ export default {
       }
     },
     deleteSchedule(id) {
-      let idToErase;
-      this.scheduleCensus.forEach(sched => {
-        if (sched.trainingId == id) {
-          console.log(sched.id);
-          db.collection("bookings")
-            .doc(sched.id)
+      Swal.fire({
+        title: "Are you sure you want to delete this schedule?",
+        text: "You won't be able to revert this!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+      }).then(result => {
+        if (result.value) {
+          this.scheduleCensus.forEach(sched => {
+            if (sched.trainingId == id) {
+              console.log(sched.id);
+              db.collection("bookings")
+                .doc(sched.id)
+                .delete()
+                .then(() => {});
+            }
+          });
+
+          db.collection("schedule")
+            .doc(id)
             .delete()
-            .then(() => {});
+            .then(() => {
+              this.events = this.events.filter(event => {
+                return event.id != id;
+              });
+            });
+
+          Swal.fire("Deleted!", "Schedule has been deleted.", "success");
         }
       });
-
-      db.collection("schedule")
-        .doc(id)
-        .delete()
-        .then(() => {
-          this.events = this.events.filter(event => {
-            return event.id != id;
-          });
-        });
     }
   }
 };
