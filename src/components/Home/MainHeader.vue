@@ -1,7 +1,7 @@
 <template>
   <div class="main-header mt-5">
     <div class="carouselBgcs">
-      <v-carousel height="800">
+      <v-carousel height="750" hide-controls>
         <v-carousel-item :src="items[0].src">
           <v-layout align-center justify-center fill-height row wrap>
             <v-flex xs12 class="pa-5">
@@ -16,7 +16,7 @@
               <h1
                 class="white--text font-weight-light"
               >We aim you to be more prepared than you have ever been. We know, We Share, We are your SAFETY advocate.</h1>
-              <v-btn large class="success">Learn More</v-btn>
+              <v-btn large route to="/trainings" class="success">Learn More</v-btn>
             </v-flex>
           </v-layout>
         </v-carousel-item>
@@ -27,7 +27,7 @@
               <h1
                 class="white--text font-weight-light"
               >We are Nurses, Doctors, Emergency Medical Technicians and Safety Practitioners. Learn from our years of cumulative experience, skills and expertise.</h1>
-              <v-btn large class="warning">Learn More</v-btn>
+              <v-btn route to="/trainings" large class="warning">Learn More</v-btn>
             </v-flex>
           </v-layout>
         </v-carousel-item>
@@ -38,7 +38,7 @@
               <h1
                 class="white--text font-weight-light"
               >BGCS innovates to unite Creative Professionals in a complete array of teambuilding, event management, production and event promotion.</h1>
-              <v-btn large class="error">Learn More</v-btn>
+              <v-btn route to="/trainings" large class="error">Learn More</v-btn>
             </v-flex>
           </v-layout>
         </v-carousel-item>
