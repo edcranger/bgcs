@@ -15,18 +15,21 @@
     </v-card>
 
     <WhoWEAre />
+    <Team />
     <Footer />
   </div>
 </template>
 
 <script>
 import WhoWEAre from "@/components/About/WhoWeAre";
+import Team from "@/components/Contact/Team";
 import Footer from "@/components/Footer";
 export default {
   name: "About",
   components: {
     WhoWEAre,
-    Footer
+    Footer,
+    Team
   }
 };
 </script>

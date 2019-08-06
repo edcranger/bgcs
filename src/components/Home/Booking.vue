@@ -52,7 +52,7 @@
 
         <v-flex xs12 md12 class>
           <v-container fluid>
-            <v-sheet height="100%">
+            <v-sheet>
               <div class="text-xs-center">
                 <v-layout align-center justify-space-between row fill-height>
                   <v-flex xs4>
@@ -134,6 +134,7 @@
 
 <script>
 import db from "@/firebase/init";
+import moment from "moment";
 import BookingForm from "@/components/Home/BookingForm";
 export default {
   name: "Booking",
@@ -144,8 +145,8 @@ export default {
     return {
       activeClass: "primary",
       errorClass: "error",
-      start: "07-24-2019",
-      today: "07-24-2019",
+      start: moment().format("MM-D-YYYY"),
+      today: moment().format("MM-D-YYYY"),
       events: [],
       scheduleCensus: [],
       items: [

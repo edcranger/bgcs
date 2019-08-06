@@ -47,7 +47,7 @@
                     name="name"
                     label="First Name"
                     type="text"
-                    :rules="[rules.required, rules.min(8)]"
+                    :rules="[rules.required]"
                     v-model.trim="name"
                     required
                   ></v-text-field>
@@ -122,7 +122,7 @@ export default {
   data() {
     return {
       admins: [],
-      showCreateAdmin: false,
+
       adminMadeDialog: false,
       form: false,
       loading: false,
@@ -152,6 +152,7 @@ export default {
               })
               .then(() => {
                 this.$refs.form.reset();
+                this.logout();
                 this.adminMadeDialog = true;
               });
           })

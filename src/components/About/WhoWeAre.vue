@@ -112,6 +112,7 @@
 <script>
 export default {
   name: "WhoWeAre",
+  components: {},
   data() {
     return {};
   }

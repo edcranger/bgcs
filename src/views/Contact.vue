@@ -98,21 +98,20 @@
         </v-flex>
       </v-layout>
     </v-container>
-    <Team />
+
     <Footer />
   </div>
 </template>
 
 <script>
 import ContactForm from "@/components/Contact/ContactForm";
-import Team from "@/components/Contact/Team";
+
 import Footer from "@/components/Footer";
 export default {
   name: "Contact",
   components: {
     ContactForm,
-    Footer,
-    Team
+    Footer
   }
 };
 </script>

@@ -26,7 +26,7 @@
                   </v-btn>
                 </v-flex>
                 <v-flex xs4>
-                  <h2>{{new Date() | moment("MMMM") }}</h2>
+                  <h2>{{ this.start | moment("MMMM") }}</h2>
                 </v-flex>
                 <v-flex xs4>
                   <v-btn @click="$refs.calendar.next()">

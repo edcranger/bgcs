@@ -22,5 +22,8 @@ export default {
 };
 </script>
 <style >
+.toper {
+  margin-top: 50px;
+}
 </style>
 

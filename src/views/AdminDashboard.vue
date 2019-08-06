@@ -138,6 +138,6 @@ export default {
 
 <style>
 .admin-dashboard {
-  margin-top: 50px;
+  margin-top: 90px;
 }
 </style>
