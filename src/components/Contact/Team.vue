@@ -31,16 +31,21 @@ export default {
           img: require("@/assets/team/Gener.jpg")
         },
         {
-          name: "Cindy Mortera, R.N., E.M.T-B",
-          position: "VP Finance / Training Head",
-          img: require("@/assets/team/cindy.jpg")
-        },
-
-        {
           name: "Randy “Randal” Boco",
           position: "VP Operations / Event Director",
           img: require("@/assets/team/randy.jpg")
         },
+        {
+          name: "Cindy Mortera, R.N., E.M.T-B",
+          position: "VP Finance / Training Head",
+          img: require("@/assets/team/cindy.jpg")
+        },
+        {
+          name: "Ma. Diana S. Mortera, R.N. ",
+          position: "Training Marketing Associate ",
+          img: require("@/assets/team/diana.jpg")
+        },
+
         {
           name: "Irene “Shena” Alsree",
           position: "Marketing Associate",
@@ -50,6 +55,12 @@ export default {
           name: "Cris V. Corsanes",
           position: "Sales Executive ",
           img: require("@/assets/team/cris.jpg")
+        },
+
+        {
+          name: "Erickson T. Santos",
+          position: "Sales Executive",
+          img: require("@/assets/team/erickson.jpg")
         }
       ]
     };
