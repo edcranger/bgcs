@@ -8,9 +8,7 @@
               <v-list class="pa-0 grey darken-4" dark>
                 <v-list-tile avatar>
                   <v-list-tile-avatar>
-                    <img
-                      src="https://preen.inquirer.net/files/2018/05/bea-alonzo-breakup-e1525846325572.jpg"
-                    />
+                    <i class="fas fa-user-tie fa-2x"></i>
                   </v-list-tile-avatar>
 
                   <v-list-tile-content>
