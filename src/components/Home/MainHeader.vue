@@ -58,7 +58,7 @@ export default {
           src: require("@/assets/picheaders/cpr.png")
         },
         {
-          src: require("@/assets/picheaders/group.jpg")
+          src: require("@/assets/picheaders/group2.jpg")
         },
         {
           src: require("@/assets/picheaders/dummy.jpg")

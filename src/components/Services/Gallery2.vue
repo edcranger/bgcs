@@ -18,13 +18,13 @@
 
         <v-flex
           xs6
-          md2
+          md3
           class="pa-2"
           v-for="(image, imageIndex) in images"
           :key="imageIndex"
           @click="index = imageIndex"
         >
-          <v-img height="100" :src="image"></v-img>
+          <v-img height="330" :src="image"></v-img>
         </v-flex>
       </v-layout>
     </v-container>
@@ -49,32 +49,16 @@ export default {
   data() {
     return {
       images: [
-        require("@/assets/events/Slide2.png"),
-        require("@/assets/events/Slide3.png"),
-        require("@/assets/events/Slide4.png"),
-        require("@/assets/events/Slide5.png"),
-        require("@/assets/events/Slide6.png"),
-        require("@/assets/events/Slide7.png"),
-        require("@/assets/events/Slide8.png"),
-        require("@/assets/events/Slide9.png"),
-        require("@/assets/events/Slide10.png"),
-        require("@/assets/events/Slide11.png"),
-        require("@/assets/events/Slide12.png"),
-        require("@/assets/events/Slide13.png"),
-        require("@/assets/events/Slide14.png"),
-        require("@/assets/events/Slide15.png"),
-        require("@/assets/events/Slide16.png"),
-        require("@/assets/events/Slide17.png"),
-        require("@/assets/events/Slide18.png"),
-        require("@/assets/events/Slide19.png"),
-        require("@/assets/events/Slide20.png"),
-        require("@/assets/events/Slide21.png"),
-        require("@/assets/events/Slide22.png"),
-        require("@/assets/events/Slide23.png"),
-        require("@/assets/events/Slide24.png"),
-        require("@/assets/events/Slide25.png"),
-        require("@/assets/events/Slide26.png"),
-        require("@/assets/events/Slide27.png")
+        require("@/assets/eventpics/1.jpg"),
+        require("@/assets/eventpics/2.jpg"),
+        require("@/assets/eventpics/3.jpg"),
+        require("@/assets/eventpics/4.jpg"),
+        require("@/assets/eventpics/5.jpg"),
+        require("@/assets/eventpics/6.jpg"),
+        require("@/assets/eventpics/7.jpg"),
+        require("@/assets/eventpics/8.jpg"),
+        require("@/assets/eventpics/9.jpg"),
+        require("@/assets/eventpics/10.jpg")
       ],
       index: null
     };
