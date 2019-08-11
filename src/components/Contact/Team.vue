@@ -12,7 +12,25 @@
         <v-avatar size="150" color="grey lighten-4">
           <img :src="item.img" contain />
         </v-avatar>
-        <h2 class="mt-3">{{item.name}}</h2>
+        <h3 class="mt-3">{{item.name}}</h3>
+        <p class="white--text">{{item.position}}</p>
+      </v-flex>
+    </v-layout>
+
+    <h1 class="text-xs-center white--text mt-5">Instructors</h1>
+    <!-- Instructors Tab -->
+    <v-layout align-center justify-space-around row fill-height wrap>
+      <v-flex
+        xs12
+        md2
+        class="text-xs-center white--text ma-5"
+        v-for="(item, index) in instructors"
+        :key="index"
+      >
+        <v-avatar size="80" color="grey lighten-4">
+          <img :src="item.img" contain />
+        </v-avatar>
+        <h4 class="mt-3">{{item.name}}</h4>
         <p class="white--text">{{item.position}}</p>
       </v-flex>
     </v-layout>
@@ -61,6 +79,45 @@ export default {
           name: "Erickson T. Santos",
           position: "Sales Executive",
           img: require("@/assets/team/erickson.jpg")
+        }
+      ],
+      instructors: [
+        {
+          name: "Bayani G. Belangue Jr. , R.N., EMT-B",
+
+          img: require("@/assets/team/bayani.jpg")
+        },
+        {
+          name: "Gilbert B. Gimeno, R.N., R.M.,  EMT-B",
+
+          img: require("@/assets/team/gilbert.jpg")
+        },
+        {
+          name: "Khristian B. Dacanay, R.N., EMT-B",
+
+          img: require("@/assets/team/khristian.jpg")
+        },
+        {
+          name: "Jerome P. Mahilom, R.N., EMT-B",
+
+          img: require("@/assets/team/jerome.jpg")
+        },
+
+        {
+          name: "Jasmin B. Botor, R.M., R.N., EMT-D",
+
+          img: require("@/assets/team/jasmin.jpg")
+        },
+        {
+          name: "Janice R. Catubigan, R.N., EMT- B",
+
+          img: require("@/assets/team/janice.jpg")
+        },
+
+        {
+          name: "Carlito M. Bautista, R.P.T., EMT-B",
+
+          img: require("@/assets/team/carlito.jpg")
         }
       ]
     };

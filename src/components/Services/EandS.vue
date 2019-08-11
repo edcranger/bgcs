@@ -53,7 +53,7 @@ export default {
       servicesData: [
         {
           name: `Basic Life Support (AHA) `,
-          space: false,
+          space: true,
           dialog: false,
           img: require("@/assets/trainings/bls.png"),
           courseOutline: [
@@ -87,7 +87,7 @@ export default {
         {
           name: "Basic Life Support (ASHI)",
           dialog: false,
-          space: false,
+          space: true,
           img: require("@/assets/trainings/ashiBls.png"),
           courseOutline: [
             {
@@ -186,7 +186,7 @@ export default {
         {
           name: "Search and Rescue",
           dialog: false,
-          space: false,
+          space: true,
           img: require("@/assets/trainings/searchRescue.png"),
           courseOutline: [
             {
@@ -197,7 +197,7 @@ export default {
         {
           name: "High Angle and Rope Rescue",
           dialog: false,
-          space: false,
+          space: true,
           img: require("@/assets/trainings/highAngle.png"),
           courseOutline: [
             {

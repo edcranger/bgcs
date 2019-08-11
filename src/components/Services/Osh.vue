@@ -52,7 +52,7 @@ export default {
     return {
       servicesData: [
         {
-          name: `Basic Occupational Safety and Health (BOSH) `,
+          name: `Basic Occupational Safety and Health `,
           space: false,
           dialog: false,
           img: require("@/assets/trainings/bosh.png"),
@@ -69,7 +69,7 @@ export default {
           ]
         },
         {
-          name: "Construction Occupational Safety and Health (COSH)",
+          name: "Construction Occupational Safety and Health",
           dialog: false,
           space: false,
           img: require("@/assets/trainings/cosh.png"),

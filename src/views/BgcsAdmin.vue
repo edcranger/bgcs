@@ -6,7 +6,7 @@
           <v-card class="loginForm elevation-1 pa-3 grey darken-4" dark>
             <v-img height="300" :src="require('@/assets/logo3.png')" contain></v-img>
             <v-card-text>
-              <div class="layout column align-center"></div>
+              <p class="red--text">{{showError}}</p>
               <v-form ref="form" v-model="form" dark>
                 <v-text-field
                   append-icon="person"
@@ -59,6 +59,7 @@ export default {
       loading: false,
       email: "",
       password: "",
+      showError: "",
       rules: {
         required: value => !!value || "Required.",
         min: v => v.length >= 8 || "Min 8 characters",
@@ -75,7 +76,10 @@ export default {
           console.log(cred.user);
           this.$router.replace("/adminDashboard");
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+          this.showError = err.message;
+          console.log(err);
+        });
     }
   },
   mounted() {}

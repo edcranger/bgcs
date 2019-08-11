@@ -49,7 +49,7 @@
                         v-html="event.name"
                       ></div>
                     </template>
-                    <v-card min-width="350px" flat>
+                    <v-card width="100%" flat>
                       <v-toolbar
                         :class="[remainingSlot(event.id,event.max) != 'Fully Booked' ? 'primary' : 'error']"
                         dark
@@ -73,6 +73,12 @@
                       </v-card-title>
                       <v-card-actions>
                         <p>Description: {{event.description}}</p>
+                      </v-card-actions>
+                      <v-card-actions>
+                        <BookingForm
+                          v-if="remainingSlot(event.id,event.max) != 'Fully Booked'"
+                          :eventId="event.id"
+                        />
                       </v-card-actions>
                       <v-card-actions>
                         <v-btn flat color="secondary">Cancel</v-btn>
@@ -152,10 +158,14 @@
 </template>
 
 <script>
+import BookingForm from "@/components/Home/BookingForm";
 import moment from "moment";
 import db from "@/firebase/init";
 export default {
   name: "Schedule",
+  components: {
+    BookingForm
+  },
 
   data() {
     return {
@@ -351,7 +361,20 @@ export default {
 };
 </script>
 
-<style>
+<style lang="stylus" scoped>
+.my-event {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  border-radius: 2px;
+  color: #ffffff;
+  border: 1px solid #1867c0;
+  width: 100%;
+  font-size: 12px;
+  padding: 3px;
+  cursor: pointer;
+  margin-bottom: 1px;
+}
 </style>
 
 
