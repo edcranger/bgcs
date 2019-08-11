@@ -27,7 +27,9 @@
                 :to="{name: 'bookedList', params: {id: props.item.id}}"
               >{{ props.item.name }}</router-link>
             </td>
-            <td class="text-xs-left">{{ props.item.status }}</td>
+            <td
+              class="text-xs-left"
+            >{{ autoComplete(props.item.status, props.item.date, props.item.id) }}</td>
             <td class="text-xs-left">{{ props.item.max }}</td>
             <td
               :class="[remainingSlot(props.item.id, props.item.max) != 'Full' ? 'text-xs-left'  : 'error--text']"
@@ -39,6 +41,20 @@
       </v-list>
 
       <v-container fluid grid-list-md class="hidden-md-and-up">
+        <v-tooltip top>
+          <v-btn small flat color="grey" @click="sortBy('name', '<')" slot="activator">
+            <v-icon left small>folder</v-icon>
+            <span class="caption text-lowercase">By name</span>
+          </v-btn>
+          <span>Sort projects by date</span>
+        </v-tooltip>
+        <v-tooltip top>
+          <v-btn small flat color="grey" @click="sortBy('date', '>')" slot="activator">
+            <v-icon left small>folder</v-icon>
+            <span class="caption text-lowercase">By date</span>
+          </v-btn>
+          <span>Sort projects by date</span>
+        </v-tooltip>
         <v-data-iterator
           :items="scheduleData"
           :rows-per-page-items="rowsPerPageItems"
@@ -68,7 +84,9 @@
                   </v-list-tile>
                   <v-list-tile>
                     <v-list-tile-content>Status:</v-list-tile-content>
-                    <v-list-tile-content class="align-end">{{ props.item.status }}</v-list-tile-content>
+                    <v-list-tile-content
+                      class="align-end"
+                    >{{autoComplete(props.item.status,props.item.date, props.item.id)}}</v-list-tile-content>
                   </v-list-tile>
                   <v-list-tile>
                     <v-list-tile-content>Total Slot:</v-list-tile-content>
@@ -100,6 +118,7 @@
 
 <script>
 import db from "@/firebase/init";
+import moment from "moment";
 export default {
   name: "Bookings",
   data() {
@@ -110,7 +129,7 @@ export default {
       },
       sceduleDataHeader: [
         { text: "Date", value: "date" },
-        { text: "Type", value: "type" },
+        { text: "Type", value: "name" },
         { text: "Status", value: "status" },
         { text: "Total slot", value: "slot" },
         { text: "Avail slot", value: "avail" },
@@ -122,6 +141,30 @@ export default {
     };
   },
   methods: {
+    autoComplete: function(status, date, id) {
+      if (status == "In-coming" && moment(Date.now()).isAfter(date)) {
+        db.collection("schedule")
+          .doc(id)
+          .update({
+            status: "Done"
+          })
+          .then(() => {})
+          .catch(err => console.log(err));
+        return "Done";
+      } else if (status == "Done" && moment(Date.now()).isAfter(date)) {
+        return "Done";
+      } else {
+        return "In-coming";
+      }
+      // return moment(Date.now())
+    },
+    sortBy(prop, order) {
+      if (order == "<") {
+        this.scheduleData.sort((a, b) => (a[prop] < b[prop] ? -1 : 1));
+      } else {
+        this.scheduleData.sort((a, b) => (a[prop] > b[prop] ? -1 : 1));
+      }
+    },
     inquiredNumber(id) {
       let number = 0;
       this.scheduleCensus.forEach(census => {

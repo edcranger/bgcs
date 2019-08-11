@@ -14,7 +14,7 @@
           md4
           v-for="(item, index) in items"
           :key="index"
-          class="mt-5 pa-5 text-xs-center"
+          class="mt-5 pa-4 text-xs-center"
         >
           <!-- <h3 class="text-xs-center">{{item.name}}</h3> -->
           <v-img width="100%" :src="item.img" contain></v-img>

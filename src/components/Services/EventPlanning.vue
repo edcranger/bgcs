@@ -26,10 +26,11 @@
             alt="avatar"
             contain
           />
-          <p
+          <!-- <p
             class="subheading text-xs-center"
-          >Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit hic sunt, alias deserunt ipsa consequatur fuga.</p>
-          <v-btn class="primary mb-5">Contact Us</v-btn>
+          >Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit hic sunt, alias deserunt ipsa consequatur fuga.</p>-->
+          <br />
+          <v-btn class="primary mb-5" route to="/contactUs">Contact Us</v-btn>
         </v-flex>
         <v-flex xs12 sm4 md6 class="mb-5">
           <h1 class="font-weight-medium">
