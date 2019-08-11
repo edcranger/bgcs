@@ -24,7 +24,7 @@
           :key="imageIndex"
           @click="index = imageIndex"
         >
-          <v-img height="330" :src="image"></v-img>
+          <v-img height="250" :src="image"></v-img>
         </v-flex>
       </v-layout>
     </v-container>
