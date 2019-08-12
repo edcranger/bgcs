@@ -54,7 +54,7 @@ export default {
           img: require("@/assets/team/randy.jpg")
         },
         {
-          name: "Ma. Cindy Mortera, R.N., E.M.T-B",
+          name: "Ma. Cindy S. Mortera, R.N., E.M.T-B",
           position: "VP Finance / Training Head",
           img: require("@/assets/team/cindy.jpg")
         },
