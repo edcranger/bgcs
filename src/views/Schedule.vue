@@ -26,7 +26,7 @@
                   </v-btn>
                 </v-flex>
                 <v-flex xs4>
-                  <h2>{{ this.start | moment("MMMM") }}</h2>
+                  <h4>{{ this.start | moment("MMMM") }}</h4>
                 </v-flex>
                 <v-flex xs4>
                   <v-btn @click="$refs.calendar.next()">
@@ -207,7 +207,7 @@ export default {
         "TTT",
         "WAH"
       ],
-       category: [
+      category: [
         "AHA-ACLS",
         "AHA-BLS",
         "AHA - ACLS|BLS",
@@ -242,9 +242,7 @@ export default {
         "Earthquake -Fire Drill with ICS",
         "Search and Rescue",
         "Technical Rope Rescue",
-        "Team Building",
- 
-        
+        "Team Building"
       ],
       rules: {
         length: len => v =>
