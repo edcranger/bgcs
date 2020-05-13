@@ -43,11 +43,11 @@ export default {
   data() {
     return {
       team: [
-        {
-          name: "Engr. Gener A. de Leon",
-          position: "President",
-          img: require("@/assets/team/Gener.jpg")
-        },
+        // {
+        //   name: "Engr. Gener A. de Leon",
+        //   position: "President",
+        //   img: require("@/assets/team/Gener.jpg")
+        // },
         {
           name: "Randy “Randal” Boco",
           position: "VP Operations / Event Director",

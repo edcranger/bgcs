@@ -242,7 +242,7 @@ export default {
           });
         }
         if (change.type === "modified") {
-          let doc = change.doc;
+          // let doc = change.doc;
           db.collection("bookings")
             .where("idOfTraining", "==", this.$route.params.id)
             .onSnapshot(querySnapshot => {
@@ -286,8 +286,7 @@ export default {
     confirmBooking: function(id) {
       this.bookings.forEach(book => {
         if (book.id === id) {
-          let ref = db
-            .collection("bookings")
+          db.collection("bookings")
             .doc(id)
             .update({
               payment: "Paid",
@@ -295,7 +294,9 @@ export default {
               referrence: book.referrenceNumber
             })
             .then(() => {
+              // eslint-disable-next-line no-console
               console.log(this.bookings);
+              // eslint-disable-next-line no-console
               console.log(`${book.referrenceNumber} of ${id}`);
             });
         }
@@ -304,41 +305,44 @@ export default {
     cancelBooking: function(id) {
       this.bookings.forEach(book => {
         if (book.id === id) {
-          let ref = db
-            .collection("bookings")
+          db.collection("bookings")
             .doc(id)
             .update({
               status: "Not confirmed"
             })
             .then(() => {
+              // eslint-disable-next-line no-console
               console.log(this.bookings);
+              // eslint-disable-next-line no-console
               console.log(`${book.referrenceNumber} of ${id}`);
             });
         }
       });
     },
     deleteBookingInquiry: function(id) {
-      Swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!"
-      }).then(result => {
-        if (result.value) {
-          db.collection("bookings")
-            .doc(id)
-            .delete()
-            .then(() => {
-              this.bookings = this.bookings.filter(booking => {
-                return booking.id != id;
+      this.$swal
+        .fire({
+          title: "Are you sure?",
+          text: "You won't be able to revert this!",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, delete it!"
+        })
+        .then(result => {
+          if (result.value) {
+            db.collection("bookings")
+              .doc(id)
+              .delete()
+              .then(() => {
+                this.bookings = this.bookings.filter(booking => {
+                  return booking.id != id;
+                });
               });
-            });
-          Swal.fire("Deleted!", "Booking has been deleted.", "success");
-        }
-      });
+            this.$swal.fire("Deleted!", "Booking has been deleted.", "success");
+          }
+        });
     }
   }
 };

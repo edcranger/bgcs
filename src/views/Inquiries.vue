@@ -132,6 +132,7 @@ export default {
           unread: false
         })
         .then(() => {})
+        // eslint-disable-next-line no-console
         .catch(err => console.log(err));
     }
   }

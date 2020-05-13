@@ -98,10 +98,11 @@ export default {
     submitInquiry() {
       db.collection("inquiries")
         .add(this.formdata)
-        .then(docRef => {
+        .then(() => {
           this.$refs.form.reset();
           this.contactSubmitDialog = true;
         })
+        // eslint-disable-next-line no-console
         .catch(err => console.log(err));
     }
   }

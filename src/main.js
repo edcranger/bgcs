@@ -8,7 +8,7 @@ import VueLazyLoad from "vue-lazyload";
 import firebase from "firebase";
 import Swal from "sweetalert2";
 
-window.Swal = Swal;
+Vue.prototype.$swal = Swal;
 
 require("vue-image-lightbox/dist/vue-image-lightbox.min.css");
 
@@ -25,7 +25,7 @@ firebase.auth().onAuthStateChanged(() => {
   if (!app) {
     new Vue({
       router,
-      render: h => h(App)
+      render: (h) => h(App),
     }).$mount("#app");
   }
 });

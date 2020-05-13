@@ -39,7 +39,7 @@
     <v-card>
       <v-parallax
         dark
-        src="https://i0.wp.com/myarsenalstrength.com/wp-content/uploads/2015/08/parallax-dark.jpg?ssl=1"
+        src="https://lh3.googleusercontent.com/proxy/fo8ukvD945Ybn8kpv0q0J9PDRWVO4pQzSE8RGnr0xAyGJv5UdZ_xHUMD2peLLcXwyyHv4dadG2JLhcxu6fNXJHB-BpaJ7uTaaaW4r4DlhYMGYT06LG_mvon9m0GLiAI-rp07QuBGiSnH"
         height="150"
       >
         <v-layout align-center justify-center fill-height row wrap>

@@ -205,9 +205,7 @@ export default {
         "Risk Management",
         "SPA",
         "TTT",
-        "WAH"
-      ],
-      category: [
+        "WAH",
         "AHA-ACLS",
         "AHA-BLS",
         "AHA - ACLS|BLS",
@@ -342,6 +340,7 @@ export default {
         .then(() => {
           this.$refs.form.reset();
         })
+        // eslint-disable-next-line no-console
         .catch(err => console.log(err));
     },
     remainingSlot: function(id, max) {
@@ -361,38 +360,45 @@ export default {
       }
     },
     deleteSchedule(id) {
-      Swal.fire({
-        title: "Are you sure you want to delete this schedule?",
-        text: "You won't be able to revert this!",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!"
-      }).then(result => {
-        if (result.value) {
-          this.scheduleCensus.forEach(sched => {
-            if (sched.trainingId == id) {
-              console.log(sched.id);
-              db.collection("bookings")
-                .doc(sched.id)
-                .delete()
-                .then(() => {});
-            }
-          });
+      this.$wwal
+        .fire({
+          title: "Are you sure you want to delete this schedule?",
+          text: "You won't be able to revert this!",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, delete it!"
+        })
+        .then(result => {
+          if (result.value) {
+            this.scheduleCensus.forEach(sched => {
+              if (sched.trainingId == id) {
+                // eslint-disable-next-line no-console
 
-          db.collection("schedule")
-            .doc(id)
-            .delete()
-            .then(() => {
-              this.events = this.events.filter(event => {
-                return event.id != id;
-              });
+                db.collection("bookings")
+                  .doc(sched.id)
+                  .delete()
+                  .then(() => {});
+              }
             });
 
-          Swal.fire("Deleted!", "Schedule has been deleted.", "success");
-        }
-      });
+            db.collection("schedule")
+              .doc(id)
+              .delete()
+              .then(() => {
+                this.events = this.events.filter(event => {
+                  return event.id != id;
+                });
+              });
+
+            this.$swal.fire(
+              "Deleted!",
+              "Schedule has been deleted.",
+              "success"
+            );
+          }
+        });
     }
   }
 };

@@ -50,7 +50,7 @@
 
 <script>
 import firebase from "firebase";
-import Footer from "@/components/Footer";
+// import Footer from "@/components/Footer";
 export default {
   name: "BgcsAdmin",
   data() {
@@ -73,11 +73,13 @@ export default {
         .auth()
         .signInWithEmailAndPassword(this.email, this.password)
         .then(cred => {
+          // eslint-disable-next-line no-console
           console.log(cred.user);
           this.$router.replace("/adminDashboard");
         })
         .catch(err => {
           this.showError = err.message;
+          // eslint-disable-next-line no-console
           console.log(err);
         });
     }

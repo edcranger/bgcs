@@ -140,7 +140,7 @@ export default {
     createAdmin() {
       let ref = db.collection("admin").doc(this.name);
 
-      ref.get().then(doc => {
+      ref.get().then(() => {
         firebase
           .auth()
           .createUserWithEmailAndPassword(this.email, this.password)
@@ -165,6 +165,7 @@ export default {
             } else {
               alert(errorMessage);
             }
+            // eslint-disable-next-line no-console
             console.log(error);
           });
       });
@@ -193,7 +194,6 @@ export default {
           });
         }
         if (change.type === "modified") {
-          let doc = change.doc;
           db.collection("bookings").onSnapshot(querySnapshot => {
             this.admins = [];
             querySnapshot.forEach(doc => {

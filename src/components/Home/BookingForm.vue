@@ -149,6 +149,7 @@ export default {
           this.dialog = false;
           this.bookingSubmitDialog = true;
         })
+        // eslint-disable-next-line no-console
         .catch(err => console.log(err));
     }
   }
