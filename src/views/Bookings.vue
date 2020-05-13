@@ -149,6 +149,7 @@ export default {
             status: "Done"
           })
           .then(() => {})
+          // eslint-disable-next-line no-console
           .catch(err => console.log(err));
         return "Done";
       } else if (status == "Done" && moment(Date.now()).isAfter(date)) {
